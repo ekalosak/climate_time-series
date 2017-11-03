@@ -63,5 +63,11 @@ if(plot.bool){
           type="l")
 }
 
+## Extract a single day each year as an attempt to de-season the data
+st.day = 1 # starting day, 1 is Jan 01, 2005
+# NOTE: the following doesn't work... need to go throught the "t" vector that
+# holds the times of each observation
+day.ixs = seq(from=st.day, to=length(d.af), by=365)
+
 # SOURCES:
 # 1. http://geog.uoregon.edu/GeogR/topics/netCDF-read-ncdf4.html
