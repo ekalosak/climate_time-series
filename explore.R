@@ -5,6 +5,7 @@
 rm(list=ls()) # clean workspace
 
 library(ncdf4) # load .nc data files
+library(stats) # arima()
 
 # Setup parameters
 data_dir = "./data/"
@@ -144,9 +145,12 @@ if(plot.bool){
     pacf(na.omit(d.af.deseas))
 }
 
-# TODO: write all plots out to pdf
 # TODO: detrend using filter(12), deseason with filter(3)
 # TODO: try polynomial deseasoning
+# TODO: generate resampled CI from..?
+
+# Fit arima(0,1,1) as a first pass to the deseasoned data
+mod1 = arima(d.af.deseas, c(0,1,1))
 
 # Close graphics output file lock
 dev.off()
