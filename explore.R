@@ -133,7 +133,8 @@ if(plot.bool){
     title(main="One year seasonality removal from detrended observations")
 }
 
-d.af.deseas = d.af.detr - filt.ma
+#d.af.deseas = d.af.detr - filt.ma
+d.af.deseas = filt.ma
 if(plot.bool){
     par(mfrow=c(3,1))
     plot(t, d.af.deseas,
