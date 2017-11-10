@@ -8,13 +8,14 @@ library(ncdf4) # load .nc data files
 library(stats) # arima()
 
 # Setup parameters
-data_dir = "./data/"
+data_dir = "~/Desktop/STA237A/Project/"
 data_file = "lai_Lmon_CCSM4_rcp45_r2i1p1_200601-210012.nc"
 data_path = paste(data_dir, data_file, sep="")
 attr_name = "lai" # leaf area index
 plot.bool = T # plot results along the way?
 plot.filename = "basic_analysis.pdf"
 
+#Setwd to current source location
 # Open outfile in write mode
 pdf(file=plot.filename)
 
