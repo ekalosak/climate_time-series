@@ -16,6 +16,10 @@ plot.bool = T # plot results along the way?
 plot.filename = "basic_analysis.pdf"
 
 #Setwd to current source location
+src_dir=dirname(rstudioapi::getActiveDocumentContext()$path)
+setwd(src_dir)
+
+
 # Open outfile in write mode
 pdf(file=plot.filename)
 
