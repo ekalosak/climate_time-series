@@ -6,6 +6,7 @@ rm(list=ls()) # clean workspace
 
 library(ncdf4) # load .nc data files
 library(stats) # arima()
+library(TTR) # runSD() - running standard dev
 
 # Setup parameters
 data_dir = "./data/"
@@ -84,7 +85,7 @@ pacf(d.af, main="Raw data (PACF)")
 df = data.frame(obs=d.af, time=t)
 degree = 6
 fit.lm = lm(obs ~ poly(time, degree, raw=TRUE), df)
-d.af.detr = d.af-predict(fit.lm)
+d.af.detr.nosd = d.af-predict(fit.lm)
 
 plot(t, predict(fit.lm),
      xlab="Time", ylab="Polynomial signal",
@@ -92,10 +93,24 @@ plot(t, predict(fit.lm),
      ylim=range(d.af))
 title(main="Polynomial trend")
 lines(t, d.af)
-plot(t, d.af.detr,
+plot(t, d.af.detr.nosd,
      xlab="Time", ylab="Detrended signal",
      type="l", col="blue")
 title(main="Detrended")
+
+# standardize variance
+rsd = runSD(d.af.detr.nosd, 12*10) # 10 year window for sd calculation
+plot(t, rsd, main="Running standard deviation 10 year window",
+     xlab="Days since Jan 2005", ylab="Std Dev",
+     type="l")
+msd = lm(rsd~t)
+msd.p = predict.lm(msd, data.frame(t))
+lines(t, msd.p)
+d.af.detr = d.af.detr.nosd/msd.p
+plot(t, d.af.detr,
+     main="Detrended obsv with stdzd SD",
+     xlab="Days since Jan 2005", ylab="f(LAI)",
+     type="l")
 
 # Check acf and pacf with detrended data
 acf(d.af.detr, main="Detrended data (ACF)")
@@ -132,9 +147,14 @@ acf(na.omit(d.af.deseas))
 pacf(na.omit(d.af.deseas))
 par(mfrow=c(2,1))
 
-# TODO: detrend using filter(12), deseason with filter(3)
-# TODO: try polynomial deseasoning
-# TODO: generate resampled CI from..?
+## spectral analysis and sinusoidal fit to deseason
+par(mfrow=c(1,1))
+m = ar(d.af.detr)
+s = spec.ar(m, main=paste("Spectrum of AR(", m$order, ") ~ detrended",
+                          sep=""))
+# TODO: find maximal frq -> period
+abline(v=0.08) # 0.08 i.e. first peak (note: 1/0.08 = 12.5)
+par(mfrow=c(2,1))
 
 ## Fit time series models
 # m = arima(d.af.deseas, c(0,1,1))
@@ -156,9 +176,12 @@ plot(1:length(s), s,
 sp = spec.ar(m, main="Spectral density of AR(4)",
              col="orange")
 
+# TODO: generate resampled CI from..?
+
 # Close graphics output file lock
-dev.off()
+graphics.off()
 
 # SOURCES:
 # 1. http://geog.uoregon.edu/GeogR/topics/netCDF-read-ncdf4.html
 # 2. https://rpubs.com/ryankelly/ts2
+
