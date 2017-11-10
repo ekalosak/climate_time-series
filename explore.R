@@ -49,12 +49,13 @@ z = d[,,1] # all LAI values across the planet at time 1
 
 # plotting subroutines
 leaf.colors = function(x){rev(terrain.colors(x))}
-filled.contour(x,y,z, color = leaf.colors, asp = 1,
+filled.contour(x,y,z, color = leaf.colors,
                plot.axes={
                    axis(1); axis(2);
                    points(
                           floor(lon[loc.af[2]]),
-                          floor(lat[loc.af[1]])
+                          floor(lat[loc.af[1]]),
+                          col="purple", lwd=3
                           )
                })
 title(xlab="Longitude", ylab="Latitude", main="Leaf area, Jan 2005")
@@ -85,49 +86,51 @@ degree = 6
 fit.lm = lm(obs ~ poly(time, degree, raw=TRUE), df)
 d.af.detr = d.af-predict(fit.lm)
 
-par(mfrow=c(2,1))
 plot(t, predict(fit.lm),
      xlab="Time", ylab="Polynomial signal",
      type="l", col="purple",
      ylim=range(d.af))
 title(main="Polynomial trend")
 lines(t, d.af)
-
 plot(t, d.af.detr,
      xlab="Time", ylab="Detrended signal",
      type="l", col="blue")
 title(main="Detrended")
-par(mfrow=c(1,1))
 
 # Check acf and pacf with detrended data
-par(mfrow=c(2,1))
 acf(d.af.detr, main="Detrended data (ACF)")
 pacf(d.af.detr, main="Detrended data (PACF)")
 
 # try using differences
 d.af.diff = diff(d.af)
-par(mfrow=c(2,1))
+plot(t, d.af.detr, type="l", col="blue",
+     main="Detrended", xlab="Days since 01-01-2005", ylab="LAI")
+plot(t[1:length(d.af.diff)], d.af.diff, type="l", col="red",
+     main="Differenced", xlab="Days since 01-01-2005", ylab="LAI")
 acf(d.af.diff, main="Differenced data (ACF)")
 pacf(d.af.diff, main="Differenced data (PACF)")
 
 # moving average to de-season
 filter.length = 12 # 12 used because t[1]-t[13] = -365
 filt.ma = filter(d.af.detr, rep(1,filter.length)/filter.length)
-par(mfrow=c(1,1))
-plot(t, d.af.detr, type="l", xlab="Days since 01-01-2005", ylab="LAI")
-lines(t, filt.ma, type="l", col="red")
-title(main="Moving average seasonality removal")
 
 #d.af.deseas = d.af.detr - filt.ma
 d.af.deseas = filt.ma
-par(mfrow=c(3,1))
+
+plot(t, d.af.detr, type="l",
+     xlab="Days since 01-01-2005", ylab="LAI", col="blue")
+lines(t, filt.ma, type="l", col="red")
+title(main="Moving average seasonality (filter.width=1yr)")
+abline(v=t[120])
+abline(v=t[132]) # show a year width on plot
 plot(t, d.af.deseas,
      type="l", col="green",
-     xlab="Days since 01-01-2005", ylab="Deseasoned signal",
-     main="Deseasoned LAI"
-     )
+     xlab="Days since Jan, 2005", ylab="Deseasoned signal",
+     main="Deseasoned LAI")
+
 acf(na.omit(d.af.deseas))
 pacf(na.omit(d.af.deseas))
+par(mfrow=c(2,1))
 
 # TODO: detrend using filter(12), deseason with filter(3)
 # TODO: try polynomial deseasoning
@@ -140,23 +143,18 @@ m = ar(na.omit(d.af.deseas), order.max=4) # looking at the PACF
 ## simulate some using the model to spot check
 ts = m$ar
 s = arima.sim(list(order=c(4,0,0), ar=ts), n=length(t))
-par(mfrow=c(2,1))
-plot(1:length(s), s,
-     main="Simulated from AR(4) ~ deseasoned",
-     xlab="Months (1140mo=95yr)", ylab="LAI",
-     type="l", col="blue")
+par(mfrow=c(3,1))
 plot(t, d.af.deseas,
      main="Deseasoned data",
      xlab="Days (3500d=96yr i.e. 2005-2100)", ylab="LAI",
      type="l", col="green")
-
+plot(1:length(s), s,
+     main="Simulated from AR(4) ~ deseasoned",
+     xlab="Months (1140mo=95yr)", ylab="LAI",
+     type="l", col="blue")
 ## spectral analysis
-par(mfrow=c(2,1))
-plot(1:length(d.af.deseas), d.af.deseas,
-     type="l", main="Deseasoned observations", col="green")
 sp = spec.ar(m, main="Spectral density of AR(4)",
              col="orange")
-par(mfrow=c(1,1))
 
 # Close graphics output file lock
 dev.off()
