@@ -39,7 +39,7 @@ title(xlab="Longitude", ylab="Latitude", main="Global leaf cover, July 2005")
 ## Plot the data for the time series in a single location in sub-saharan
 ## Africa (i.e. single v=LAI, single s=African, all T=2000 to 2100)
 par(mfrow=c(3,1))
-plot(t, d.af,
+plot(time.mo, d.af,
      xlab="Days since Jan 2005",
      ylab="Tree cover (LAI)",
      main="Sub-Saharan Africa, 2005-2100",
@@ -51,54 +51,62 @@ pacf(d.af, main="Raw data (PACF)")
 
 # plot detrended data
 par(mfrow=c(2,1))
-plot(t, predict(fit.lm),
+plot(time.mo, predict(detr.poly),
      xlab="Time", ylab="Polynomial signal",
      type="l", col="purple",
      ylim=range(d.af))
 title(main=paste("Polynomial trend (poly.degree=", degree, ")", sep=""))
-lines(t, d.af)
-plot(t, d.af.detr.nosd,
+lines(time.mo, d.af)
+plot(time.mo, d.af.detr.nosd,
      xlab="Time", ylab="Detrended signal",
      type="l", col="blue")
 title(main="Detrended")
 
 # plot standardized variance data
-plot(t, rsd, main="Running standard deviation 10 year window",
+plot(time.mo, rsd, main="Running standard deviation 10 year window",
      xlab="Days since Jan 2005", ylab="Std Dev",
      type="l")
-lines(t, msd.p)
-plot(t, d.af.detr,
-     main="Detrended obsv with stdzd SD",
+lines(time.mo, sd.p)
+plot(time.mo, d.af.detr,
+     main="Detrended obsv with standardized StDev",
      xlab="Days since Jan 2005", ylab="f(LAI)",
-     type="l")
+     type="l", col="blue")
 
 # Check acf and pacf with detrended, variance standardized data
+par(mfrow=c(3,1))
+plot(time.mo, d.af.detr,
+     main="Detrended obsv with standardized StDev",
+     xlab="Days since Jan 2005", ylab="f(LAI)",
+     type="l", col="blue")
 acf(d.af.detr, main="Detrended data (ACF)")
 pacf(d.af.detr, main="Detrended data (PACF)")
 
 # Plot differenced data
-plot(t, d.af.detr, type="l", col="blue",
-     main="Detrended", xlab="Days since 01-01-2005", ylab="LAI")
-plot(t[1:length(d.af.diff)], d.af.diff, type="l", col="red",
+plot(time.mo[1:length(d.af.diff)], d.af.diff, type="l", col="red",
      main="Differenced", xlab="Days since 01-01-2005", ylab="LAI")
 acf(d.af.diff, main="Differenced data (ACF)")
 pacf(d.af.diff, main="Differenced data (PACF)")
 
-# Plot the moving average deseasonalization
-par(mfrow=c(1,1))
-plot(t, d.af.detr, type="l", xlab="Days since 01-01-2005", ylab="LAI")
-lines(t, filt.ma, type="l", col="red")
-title(main="One year seasonality removal from detrended observations")
+# Plot the moving average deseasonalization and the spectral justification
+par(mfrow=c(2,1))
 
-plot(t, d.af.detr, type="l",
+m = ar(d.af.detr)
+s = spec.ar(m, main=paste("Spectrum of AR(", m$order, ") ~ detrended",
+                          sep=""))
+abline(v=0.01402806) # largest spectral peak (1/0.014 = 72)
+abline(v=0.08333333) # second spectral peak (note: 1/0.0833 = 12)
+
+plot(time.mo, d.af.detr, type="l",
      xlab="Days since 01-01-2005", ylab="LAI", col="blue")
-lines(t, filt.ma, type="l", col="red")
+lines(time.mo, filt.ma, type="l", col="red")
 title(main="Moving average seasonality (filter.width=1yr)")
-abline(v=t[120])
-abline(v=t[132]) # show a year width on plot
+abline(v=time.mo[120])
+abline(v=time.mo[120+12]) # show a year width on plot
+abline(v=time.mo[361])
+abline(v=time.mo[361+72]) # show a 5 year trend width on plot
 
 par(mfrow=c(3,1))
-plot(t, d.af.deseas,
+plot(time.mo, d.af.deseas,
      type="l", col="green",
      xlab="Days since Jan, 2005", ylab="Deseasoned signal",
      main="Deseasoned LAI")
@@ -111,11 +119,6 @@ mod1 = arima(d.af.deseas, c(0,1,1))
 
 ## spectral analysis and sinusoidal fit to deseason
 par(mfrow=c(1,1))
-m = ar(d.af.detr)
-s = spec.ar(m, main=paste("Spectrum of AR(", m$order, ") ~ detrended",
-                          sep=""))
-# TODO: find maximal frq -> period
-abline(v=0.08) # 0.08 i.e. first peak (note: 1/0.08 = 12.5)
 par(mfrow=c(2,1))
 
 ## Fit time series models
@@ -123,10 +126,9 @@ par(mfrow=c(2,1))
 m = ar(na.omit(d.af.deseas), order.max=4) # looking at the PACF
 
 ## simulate some using the model to spot check
-ts = m$ar
-s = arima.sim(list(order=c(4,0,0), ar=ts), n=length(t))
+s = arima.sim(list(order=c(4,0,0), ar=m$ar), n=length(time.mo))
 par(mfrow=c(3,1))
-plot(t, d.af.deseas,
+plot(time.mo, d.af.deseas,
      main="Deseasoned data",
      xlab="Days (3500d=96yr i.e. 2005-2100)", ylab="LAI",
      type="l", col="green")
@@ -138,6 +140,7 @@ plot(1:length(s), s,
 sp = spec.ar(m, main="Spectral density of AR(4)",
              col="orange")
 
+# TODO: examine deseasoned residuals
 # TODO: generate resampled CI from..?
 
 # Close graphics output file lock
