@@ -14,17 +14,20 @@ mo.ixs = seq(from=st.mo, to=length(d.af), by=12)
 ## Standardize variance, detrend, deseason etc. standard time series analysis
 
 # detrend with polynomial model
-df = data.frame(obs=d.af, time=t)
+df = data.frame(obs=d.af, time=time.mo)
 degree = 15
-fit.lm = lm(obs ~ poly(time, degree, raw=TRUE), df)
-d.af.detr.nosd = d.af - predict(fit.lm)
-# d.af.detr = d.af-predict(fit.lm)
+detr.poly = lm(obs ~ poly(time, degree, raw=TRUE), df)
+d.af.detr.nosd = d.af - predict(detr.poly)
 
 # standardize variance
 rsd = runSD(d.af.detr.nosd, 12*10) # 10 year window for sd calculation
-msd = lm(rsd~t)
-msd.p = predict.lm(msd, data.frame(t))
+df$stdv = rsd
+degree2 = 6
+stdv.poly = lm(stdv ~ poly(time, degree2, raw=TRUE), df)
+stdv.poly = lm(stdv ~ time, df)
+msd.p = predict.lm(stdv.poly, data.frame(time=time.mo))
 d.af.detr = d.af.detr.nosd/msd.p
+df$detr = d.af.detr
 
 # try using differences
 d.af.diff = diff(d.af)
