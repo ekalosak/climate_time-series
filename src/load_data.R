@@ -12,7 +12,6 @@ data_file = "lai_Lmon_CCSM4_rcp45_r2i1p1_200601-210012.nc"
 data_path = paste(data_dir, data_file, sep="")
 attr_name = "lai" # leaf area index
 plot.bool = T # plot results along the way?
-plot.filename = "basic_analysis.pdf"
 using.rstudio = F
 
 #Setwd to current source location
@@ -22,9 +21,6 @@ if(using.rstudio){
     src_dir="./"
 }
 setwd(src_dir)
-
-# Open outfile in write mode
-pdf(file=plot.filename)
 
 # Load the.nc
 ncin = nc_open(data_path)
@@ -53,36 +49,13 @@ x = lon # 288 longitudes
 y = lat # 192 latitudes
 z = d[,,1] # all LAI values across the planet at time 1
 
-# plotting subroutines
-leaf.colors = function(x){rev(terrain.colors(x))}
-if(plot.bool){
-    filled.contour(x,y,z, color = leaf.colors, asp = 1,
-                   plot.axes={
-                       axis(1); axis(2);
-                       points(
-                              floor(lon[loc.af[2]]),
-                              floor(lat[loc.af[1]])
-                              )
-                   })
-    title(xlab="Longitude", ylab="Latitude", main="LAI at T=1")
-}
-
-## Extract the data for the time series in a single location in sub-saharan
-## Africa (i.e. single v=LAI, single s=African, all T=2000 to 2100)
-d.af = d[loc.af[2],loc.af[1],] # d.af is african single loc data from 2000 to 2100
-if(plot.bool){
-    plot(t, d.af, xlab="Time", ylab="Tree cover (LAI)",
-          main="Single location sub-Saharan African tree cover over a century",
-          type="l")
-}
-
 ## Extract a single day each year as an attempt to de-season the data
 st.day = 1 # starting day, 1 is Jan 01, 2005
 # NOTE: the following doesn't work... need to go throught the "t" vector that
 # holds the times of each observation
 day.ixs = seq(from=st.day, to=length(d.af), by=365)
 
-## Standardize variance, detrend, deseason etc. standard time series analysis
+d.af = d[loc.af[2],loc.af[1],] # d.af is african single loc data from 2000 to 2100
 
 # Check acf and pacf
 if(plot.bool){
