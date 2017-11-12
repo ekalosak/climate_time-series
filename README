@@ -6,6 +6,7 @@ This project is a final for STA237A on the CMIP5 ecological simulation data
 described in ./data/info.txt. We perform basic analyses using ARMA models and
 provide some further changepoint, non-linear, and multivariate analyses.
 
+TOC:
 ./src - .R files for analysis
 ./data - location of .csv, .nc, and other data files
 ./setup - download scripts for the CMIP5 data
