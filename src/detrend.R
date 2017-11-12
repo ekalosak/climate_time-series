@@ -1,12 +1,10 @@
-# Author: Eric Kalosa-Kenyon
-#
-# Exploratory Analysis for detrending and fitting ARIMA
+# Author: Eric
+# Detrend raw Leaf Area Index observations
 
-source("explore.R", echo=TRUE)
+source("load_data.R", echo=TRUE)
 
 #Setup output file name
 plot.filename = "detrend_fit_ARIMA.pdf"
-
 
 # Open outfile in write mode
 pdf(file=plot.filename)
