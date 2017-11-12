@@ -5,6 +5,7 @@
 rm(list=ls()) # clean workspace
 
 library(stats) # arima()
+library(rpart) # rpart() piecewise flat regression tree
 
 source("detrend.R") # loads data and detrends, stds variance, etc.
 
@@ -49,8 +50,13 @@ pacf(d.af, main="Raw data (PACF)")
 
 ## Plot standardize variance, detrend, deseasoned data
 
-# plot detrended data
-par(mfrow=c(2,1))
+# fit piecewise flat curve to data
+tree = rpart(obs ~ time, data=df)
+
+# plot detrended data and show piecewise fit
+par(mfrow=c(3,1))
+plot(df$time, df$obs, type="l")
+lines(df$time, predict(tree), col="purple")
 plot(time.mo, predict(detr.poly),
      xlab="Time", ylab="Polynomial signal",
      type="l", col="purple",
@@ -63,6 +69,7 @@ plot(time.mo, d.af.detr.nosd,
 title(main="Detrended")
 
 # plot standardized variance data
+par(mfrow=c(2,1))
 plot(time.mo, rsd, main="Running standard deviation 10 year window",
      xlab="Days since Jan 2005", ylab="Std Dev",
      type="l")
@@ -141,6 +148,7 @@ sp = spec.ar(m, main="Spectral density of AR(4)",
              col="orange")
 
 # TODO: examine deseasoned residuals
+# TODO: examine ts of just jan v that of july, etc.
 # TODO: generate resampled CI from..?
 
 # Close graphics output file lock
