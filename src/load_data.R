@@ -32,25 +32,7 @@ loc.af = c(
            min(which(lat > 3)),
            min(which(lon > 25))
            )
-t = ncvar_get(ncin, "time")
-tunits = ncatt_get(ncin, "time", "units")
-
-# Extract attribute and data
-attr = ncatt_get(ncin, attr_name)
-attr_data = ncvar_get(ncin, attr_name)
-d = attr_data # shorthand for the array of space X time
-# NOTE: d is indexed d[lon, lat, time], but the natural location indexing is
-# loc = [lat, lon] so to index d by a location you must do
-# d[loc[2], loc[1], time] rather than d[loc[1], loc[2], time]
-
-# Extract lat, lon, time
-lon = ncvar_get(ncin, "lon")
-lat = ncvar_get(ncin, "lat")
-loc.af = c(
-           min(which(lat > 3)),
-           min(which(lon > 25))
-           )
-t = ncvar_get(ncin, "time")
+time.mo = ncvar_get(ncin, "time")
 tunits = ncatt_get(ncin, "time", "units")
 
 # Extract attribute and data
