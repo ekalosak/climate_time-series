@@ -2,10 +2,10 @@
 #
 # Changepoint and Spectral Analyses
 
-source("explore.R", echo=TRUE)
+source("load_data.R", echo=TRUE)
 
 #Setup parameter
-plot.filename = "changepoint_spectral.pdf"
+plot.filename = "../pdf/changepoint_spectral.pdf"
 
 
 # Open outfile in write mode
