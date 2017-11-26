@@ -16,8 +16,8 @@ source("detrend.R") # loads data and detrends, stds variance, etc.
 # attr_name = "lai" # leaf area index
 
 # Plotting setup
-plot.filename = "../pdf/basic_analysis.pdf"
-pdf(file=plot.filename)
+# plot.filename = "../pdf/basic_analysis.pdf"
+# pdf(file=plot.filename)
 par(lwd=2)
 
 ## Plot the global LAI at time 0
@@ -26,6 +26,7 @@ x = lon # 288 longitudes
 y = lat # 192 latitudes
 z = d[,,7] # all LAI values across the planet at time 7 (July 2005)
 
+png(filename="../img/LAI_global_t0.png")
 leaf.colors = function(x){rev(terrain.colors(x))}
 filled.contour(x,y,z, color = leaf.colors, asp = 1,
                plot.axes={
@@ -36,9 +37,11 @@ filled.contour(x,y,z, color = leaf.colors, asp = 1,
                           )
                })
 title(xlab="Longitude", ylab="Latitude", main="Global leaf cover, July 2005")
+dev.off()
 
 ## Plot the data for the time series in a single location in sub-saharan
 ## Africa (i.e. single v=LAI, single s=African, all T=2000 to 2100)
+png(filename="../img/pacf_acf_raw.png")
 par(mfrow=c(3,1))
 plot(time.mo, d.af,
      xlab="Days since Jan 2005",
@@ -47,6 +50,7 @@ plot(time.mo, d.af,
      type="l")
 acf(d.af, main="Raw data (ACF)")
 pacf(d.af, main="Raw data (PACF)")
+dev.off()
 
 ## Plot standardize variance, detrend, deseasoned data
 
@@ -54,6 +58,7 @@ pacf(d.af, main="Raw data (PACF)")
 tree = rpart(obs ~ time, data=df)
 
 # plot detrended data and show piecewise fit
+png(filename="../img/detrended_LAI.png")
 par(mfrow=c(3,1))
 plot(df$time, df$obs, type="l")
 lines(df$time, predict(tree), col="purple")
@@ -67,8 +72,10 @@ plot(time.mo, d.af.detr.nosd,
      xlab="Time", ylab="Detrended signal",
      type="l", col="blue")
 title(main="Detrended")
+dev.off()
 
 # plot standardized variance data
+png(filename="../img/standatdized_var_LAI.png")
 par(mfrow=c(2,1))
 plot(time.mo, rsd, main="Running standard deviation 10 year window",
      xlab="Days since Jan 2005", ylab="Std Dev",
@@ -78,8 +85,10 @@ plot(time.mo, d.af.detr,
      main="Detrended obsv with standardized StDev",
      xlab="Days since Jan 2005", ylab="f(LAI)",
      type="l", col="blue")
+dev.off()
 
 # Check acf and pacf with detrended, variance standardized data
+png(filename="../img/detrended_stdzd_acf_pacf.png")
 par(mfrow=c(3,1))
 plot(time.mo, d.af.detr,
      main="Detrended obsv with standardized StDev",
@@ -87,6 +96,7 @@ plot(time.mo, d.af.detr,
      type="l", col="blue")
 acf(d.af.detr, main="Detrended data (ACF)")
 pacf(d.af.detr, main="Detrended data (PACF)")
+dev.off()
 
 # Plot differenced data
 plot(time.mo[1:length(d.af.diff)], d.af.diff, type="l", col="red",
