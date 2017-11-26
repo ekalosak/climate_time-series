@@ -40,6 +40,7 @@ filt.ma = filter(d.af.detr, rep(1,filter.length)/filter.length)
 
 d.af.deseas = filt.ma
 d.af.deseas.resid = d.af.detr - filt.ma
+d.af.deseas.resid.diff = diff(d.af.deseas.resid)
 
 # TODO: detrend using filter(12), deseason with filter(3)
 # TODO: try polynomial deseasoning

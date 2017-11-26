@@ -58,7 +58,7 @@ dev.off()
 tree = rpart(obs ~ time, data=df)
 
 # plot detrended data and show piecewise fit
-png(filename="../img/detrended_LAI.png")
+png(filename="../img/detrended_acf_pacf.png")
 par(mfrow=c(3,1))
 plot(df$time, df$obs, type="l")
 lines(df$time, predict(tree), col="purple")
@@ -99,12 +99,16 @@ pacf(d.af.detr, main="Detrended data (PACF)")
 dev.off()
 
 # Plot differenced data
+png(filename="../img/differenced_acf_pacf.png")
+par(mfrow=c(3,1))
 plot(time.mo[1:length(d.af.diff)], d.af.diff, type="l", col="red",
      main="Differenced", xlab="Days since 01-01-2005", ylab="LAI")
 acf(d.af.diff, main="Differenced data (ACF)")
 pacf(d.af.diff, main="Differenced data (PACF)")
+dev.off()
 
 # Plot the moving average deseasonalization and the spectral justification
+png(filename="../img/deseasonalization_spectrum.png")
 par(mfrow=c(2,1))
 
 m = ar(d.af.detr)
@@ -121,7 +125,9 @@ abline(v=time.mo[120])
 abline(v=time.mo[120+12]) # show a year width on plot
 abline(v=time.mo[361])
 abline(v=time.mo[361+72]) # show a 5 year trend width on plot
+dev.off()
 
+png(filename="../img/deseasonalization.png")
 par(mfrow=c(3,1))
 plot(time.mo, d.af.deseas,
      type="l", col="green",
@@ -130,6 +136,29 @@ plot(time.mo, d.af.deseas,
 
 acf(na.omit(d.af.deseas))
 pacf(na.omit(d.af.deseas))
+dev.off()
+
+png(filename="../img/deseasonalization_resid.png")
+par(mfrow=c(3,1))
+plot(time.mo, d.af.deseas.resid,
+     type="l", col="green",
+     xlab="Days since Jan, 2005", ylab="Deseasoned residuals",
+     main="Deseasoned LAI residuals")
+
+acf(na.omit(d.af.deseas.resid))
+pacf(na.omit(d.af.deseas.resid))
+dev.off()
+
+png(filename="../img/deseasonalization_resid_difference.png")
+par(mfrow=c(3,1))
+plot(time.mo[1:length(d.af.deseas.resid.diff)], d.af.deseas.resid.diff,
+     type="l", col="green",
+     xlab="Days since Jan, 2005", ylab="Differenced residuals",
+     main="Deseasoned LAI residuals differenced")
+
+acf(na.omit(d.af.deseas.resid.diff))
+pacf(na.omit(d.af.deseas.resid.diff))
+dev.off()
 
 # Fit arima(0,1,1) as a first pass to the deseasoned data
 mod1 = arima(d.af.deseas, c(0,1,1))
