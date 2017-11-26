@@ -152,7 +152,7 @@ dev.off()
 png(filename="../img/deseasonalization_resid_difference.png")
 par(mfrow=c(3,1))
 plot(time.mo[1:length(d.af.deseas.resid.diff)], d.af.deseas.resid.diff,
-     type="l", col="green",
+     type="l", col="red",
      xlab="Days since Jan, 2005", ylab="Differenced residuals",
      main="Deseasoned LAI residuals differenced")
 
@@ -172,6 +172,7 @@ par(mfrow=c(2,1))
 m = ar(na.omit(d.af.deseas), order.max=4) # looking at the PACF
 
 ## simulate some using the model to spot check
+png(filename="../img/ar_sim.png")
 s = arima.sim(list(order=c(4,0,0), ar=m$ar), n=length(time.mo))
 par(mfrow=c(3,1))
 plot(time.mo, d.af.deseas,
@@ -185,8 +186,8 @@ plot(1:length(s), s,
 ## spectral analysis
 sp = spec.ar(m, main="Spectral density of AR(4)",
              col="orange")
+dev.off()
 
-# TODO: examine deseasoned residuals
 # TODO: examine ts of just jan v that of july, etc.
 # TODO: generate resampled CI from..?
 
