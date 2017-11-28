@@ -1,6 +1,9 @@
 \documentclass{beamer}
 
 \usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{amsmath}
 
 %% Title page formatting
 \title{Tree cover variability increases from 2005 to 2100\\ in Sub-Saharan Africa}
@@ -117,7 +120,16 @@
 
 \begin{frame}
 \frametitle{Principal Component Analysis}
-
+\begin{itemize}
+	\item 12818 locations, 1140 time points
+	\item $\mathbf{Z}(s,t) = \mathbf{U}\mathbf{\Lambda}\mathbf{V}^T$  
+	\item $\mathbf{Z}(s,t)  = \begin{pmatrix}
+	z(s_1, t_1) & z(s_2, t_1) & z(s_3, t_1) & \dots & z(s_{12818}, t_1) \\
+	z(s_1, t_2) & z(s_2, t_2) & z(s_3, t_2) & \dots & z(s_{12818}, t_2) \\
+	\vdots & \vdots & \vdots & \ddots & \vdots\\
+	z(s_1, t_{1140}) & z(s_2, t_{1140}) & z(s_3, t_{1140}) & \dots & z(s_{12818}, t_{1140})\\ 
+	\end{pmatrix}$
+\end{itemize}
 \end{frame}
 
 
@@ -178,8 +190,20 @@
 \frametitle{Principal Component Analysis}
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{../img/loading_PC1_de}
-	\caption{loading Principal Component 1}
+	\includegraphics[width=0.9\linewidth]{../img/sample_plot}
+	\caption{Global Leaf Index at Time 1}
+	\label{fig:sampleplot}
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Principal Component Analysis}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\linewidth]{../img/loading_PC1_de}
+	\caption{Loadings of Principal Component 1}
 	\label{fig:loadingpc1}
 \end{figure}
 \end{frame}
@@ -188,8 +212,8 @@
 \frametitle{Principal Component Analysis}
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{../img/loading_PC2_de}
-	\caption{loading Principal Component 2}
+	\includegraphics[width=0.9\linewidth]{../img/loading_PC2_de}
+	\caption{Loadings of Principal Component 2}
 	\label{fig:loadingpc2}
 \end{figure}
 \end{frame}
@@ -198,8 +222,8 @@
 \frametitle{Principal Component Analysis}
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{../img/loading_PC3_de}
-	\caption{loading Principal Component 3}
+	\includegraphics[width=0.9\linewidth]{../img/loading_PC3_de}
+	\caption{Loadings of Principal Component 3}
 	\label{fig:loadingpc3}
 \end{figure}
 \end{frame}
@@ -208,8 +232,8 @@
 \frametitle{Principal Component Analysis}
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{../img/loading_PC4_de}
-	\caption{loading Principal Component 4}
+	\includegraphics[width=0.9\linewidth]{../img/loading_PC4_de}
+	\caption{Loadings of Principal Component 4}
 	\label{fig:loadingpc4}
 \end{figure}
 \end{frame}
@@ -218,8 +242,8 @@
 \frametitle{Principal Component Analysis}
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{../img/loading_PC5_de}
-	\caption{loading Principal Component 5}
+	\includegraphics[width=0.9\linewidth]{../img/loading_PC5_de}
+	\caption{Loadings of Principal Component 5}
 	\label{fig:loadingpc5}
 \end{figure}
 \end{frame}
@@ -228,8 +252,8 @@
 \frametitle{Principal Component Analysis}
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{../img/loading_PC6_de}
-	\caption{loading Principal Component 6}
+	\includegraphics[width=0.9\linewidth]{../img/loading_PC6_de}
+	\caption{Loadings of Principal Component 6}
 	\label{fig:loadingpc6}
 \end{figure}
 \end{frame}
@@ -275,7 +299,54 @@
 \end{frame}
 
 \begin{frame}
-Spectral Analysis
+\frametitle{PCA: Spectal Analysis}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{../img/PCA_periodogram}
+	\caption{Periodogram}
+	\label{fig:pcaperiodogram}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{PCA: Spectal Analysis}
+\begin{columns}
+	\column{2.5in}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.7\linewidth]{../img/PCA_pc1}
+		\caption{}
+		\label{fig:pcapc1}
+	\end{figure}
+ \column{2.5in}
+ \begin{align*}
+ X_t &= A\cos(2\pi\frac{1}{12}t) + B\sin(2\pi\frac{1}{12}t)  \\ 
+ &= R\sin(2\pi\frac{1}{12} + \varphi)\\
+ & \text{ where } R^2 = A^2 + B^2, \\
+ &\varphi = \arctan(\frac{A}{B}) \\
+ \gamma(h) &= \sigma^2\cos(2\pi\frac{1}{12}h) \\
+ \end{align*}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{PCA: Spectal Analysis}
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{rrrrr}
+		\hline
+		& Estimate & Std. Error & t value & Pr($>$$|$t$|$) \\ 
+		\hline
+		cos(2 * pi/12 * 1:1140) & -32.6520 & 0.5834 & -55.97 & 0.0000 \\ 
+		sin(2 * pi/12 * 1:1140) & -97.1938 & 0.5834 & -166.61 & 0.0000 \\ 
+		\hline
+	\end{tabular}
+\end{table}
+\begin{itemize}
+	\item Residual standard error: 13.93 on 1138 degrees of freedom
+	\item Multiple R-squared:  0.9645,	Adjusted R-squared:  0.9644 
+	\item F-statistic: 1.545e+04 on 2 and 1138 DF,  p-value: < 2.2e-16
+\end{itemize}
 \end{frame}
 
 \begin{frame}
