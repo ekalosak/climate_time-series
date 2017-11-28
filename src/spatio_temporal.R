@@ -25,5 +25,6 @@ nyrs = nobs/yr # number of years simulated
 library(SpatioTemporal)
 loc_ids = 1:(nlat*nlon) # names of each grid cell
 covars = data.frame(ID=loc_ids)
+# rownames(covars) = covars$ID
 covars[,c("lat", "long")] = expand.grid(lat, lon) # all pairs of lat/lon
-obs = data.frame()
+obs = data.frame(row.names=time.mo) # ID by time containing observations
