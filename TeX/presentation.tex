@@ -134,6 +134,89 @@
 \end{frame}
 
 \begin{frame}
+	\frametitle{Changepoint Analysis}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.75\linewidth]{../img/changepointex.png}
+		\caption{Example of a Changepoint}
+		
+		http://members.cbio.mines-paristech.fr/~thocking/change-tutorial/RK-CptWorkshop.html
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Changepoint Analysis}
+	\begin{itemize}
+		\item Conceptually, for data $Z_1,...,Z_n$, a changepoint $\tau$ is a point in time, such that $Z_1,...,Z_\tau$ differ from  $Z_\tau+1,...,Z_n$
+		\item How do we detect where a changepoint occurs, mathematically?
+		\item We focus on the simple case where there is at most one changepoint to illustrate the method
+		\item One approach is to use a Likelihood Ratio Test.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Changepoint Analysis: Simple Example}
+	\begin{itemize}
+		\item Assume the parametric form $Z_t|\theta_t~N(\theta_t,1)$
+		\item We state the hypotheses as: 		\item $H_0:\theta_t=\theta~ \forall t \text{ vs. } H_1:\theta_t=\theta_1,~t\leq\tau;~ \theta_t=\theta_2,~t>\tau   $
+		\item To use a likelihood ratio method, we need to maximize the likelihood under the null and alternative
+		\item Under $H_0$, the maximum log-likelihood is $\log p(y_{1:n}|\hat{\theta})$
+		\item Under $H_1$ with a changepoint $\tau$, the maximum log-likelihood is $ML(\tau) = \log p(y_{1:\tau}|\hat{\theta}_1) +  \log p(y_{\tau+1:n}|\hat{\theta}_1)$. 
+		\item  $p(\cdot)$ is the probability density function associated with the distribution of the data and $\hat{\theta}$ is
+		the maximum likelihood estimate of the parameters.
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Changepoint Analysis: Test Statistic}
+	\begin{itemize}
+		\item The log-LR statistic is then: 
+		\begin{equation*}
+		LR(\tau)=2\left[\max_\tau ML(\tau)-\log p(y_{1:n}|\hat{\theta})\right]\
+		\end{equation*}
+		\item We compare this statistic with a cut-off value, $\lambda$. If $LR>\lambda$, then we reject $H_0$ and estimate the changepoint as 
+		\begin{equation*}
+		\hat{\tau}=\arg\max_\tau LR(\tau)
+		\end{equation*}
+		\item There are many different ways to select $\lambda$. Selecting an optimal value of $\lambda$ remains an open research topic.
+		\item We use the package 'changepoint'
+		to investigate if our LAI time series has a changepoint.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Changepoint Analysis on LAI TS}
+	\begin{figure}
+	\centering
+	\includegraphics[width=0.55\linewidth]{../img/changepoint_LAI.png}
+	\caption{LAI TS}
+	\end{figure}
+	\begin{itemize}
+		\item Result: $\hat{\tau}= 237$ months after Jan. 2005, i.e. 2026 is when LAI experiences a changepoint in mean.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Changepoint Analysis: Interpretation}
+	\begin{itemize}
+		\item This data is simulated with carbon emissions to peak in 2020. Even so, the changepoint occurs in 2026, implying that the chain of events that cause the shift may have been set into motion years before the changepoint actually occurs.
+		\item If this is the case, it seems that even the optimistic outcome of curbing carbon emissions by 2020 may be too late. The domino may have already been pushed.
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Spectral Analysis: Periodogram}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.5\linewidth]{../img/RawSpec_LAI.png}
+		\caption{LAI TS}
+	\end{figure}
+	Peaks at $\omega=\frac{1}{12},\frac{2}{12}, \frac{3}{12}...$etc., indicating annual, semiannual, quarterly...etc. periods. We investigate these periods further after noticing some curious behavior in our principal component analysis.
+\end{frame}
+
+\begin{frame}
 \frametitle{Principal Component Analysis}
 \begin{itemize}
 	\item 12818 locations, 1140 time points
@@ -362,7 +445,7 @@
 \begin{itemize}
 	\item Residual standard error: 13.93 on 1138 degrees of freedom
 	\item Multiple R-squared:  0.9645,	Adjusted R-squared:  0.9644 
-	\item F-statistic: 1.545e+04 on 2 and 1138 DF,  p-value: < 2.2e-16
+	\item F-statistic: 1.545e+04 on 2 and 1138 DF,  p-value: $<$ 2.2e-16
 	\item $\hat{X}_t = 102.5319\sin(2\pi\frac{1}{12} + 0.3241)$
 \end{itemize}
 \end{frame}
