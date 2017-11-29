@@ -6,8 +6,8 @@
 library(ncdf4) # load .nc data files
 
 # Setup parameters
-# data_dir = "~/Desktop/STA237A/Project/"
-data_dir = "~/Documents/Classes/STA237A/project/data/"
+data_dir = "~/Desktop/STA237A/Project/"
+#data_dir = "~/Documents/Classes/STA237A/project/data/"
 data_file = "lai_Lmon_CCSM4_rcp45_r2i1p1_200601-210012.nc"
 data_path = paste(data_dir, data_file, sep="")
 attr_name = "lai" # leaf area index
