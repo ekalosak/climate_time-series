@@ -43,7 +43,8 @@
             the RCP4.5 experiment.
 
         \item $\theta\in\Theta, \{X_t|t\in\mathbb{Z}\} \textrm{ where }
-            X_t\sim \textrm{ARMA}_\theta$
+            X_t\sim Proc_\theta$\\
+            $X_t = [X_t^{(l)}] \textrm{ for } l\in L = lat\times lon$
     \end{itemize}
 \end{frame}
 
@@ -56,7 +57,23 @@
                 \item LAI is unitless quantity (leaf area ($m^2$))/(ground area ($m^2$))
                 \item "Comparative Physiological Studies on the Growth of Field Crops" Watson 1947 Annals of Botany
                 \item Bounded below by 0, above by physiological limits
-                \item We interrogate a location in a tropical rainforest
+            \end{itemize}
+
+        \column{3in}
+            \includegraphics[width=\columnwidth,height=\textheight,keepaspectratio]{../img/lai.png}\\
+            \includegraphics[width=\columnwidth,height=\textheight,keepaspectratio]{../img/lai2.png}
+
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Introduction: Sub-Saharan African LAI}
+    \begin{columns}
+
+        \column{2in}
+            \begin{itemize}
+                \item Initially, use only one location $l=l_0$.
+                \item Depicted under black circle on plot
             \end{itemize}
 
         \column{3in}
