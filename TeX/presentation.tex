@@ -166,11 +166,12 @@
 		\hline
 		& PC1 & PC2 & PC3 & PC4 & PC5 & PC6 \\ 
 		\hline
-		SD & 66.650 & 28.003 & 24.356 & 20.348 & 17.832 & 12.301 \\ 
+		StDiv & 66.650 & 28.003 & 24.356 & 20.348 & 17.832 & 12.301 \\ 
 		Prop. of Var. & 0.347 & 0.061 & 0.046 & 0.032 & 0.025 & 0.012 \\ 
 		Cum. Prop.& 0.347 & 0.408 & 0.454 & 0.486 & 0.511 & 0.523 \\ 
 		\hline
 	\end{tabular}
+\caption{Raw Data}
 \end{table}
 \begin{table}[ht]
 	\centering
@@ -178,11 +179,12 @@
 		\hline
 		& PC1 & PC2 & PC3 & PC4 & PC5 & PC6 \\ 
 		\hline
-		SD & 73.857 & 35.586 & 23.852 & 14.581 & 11.859 & 10.669 \\ 
+		StDiv & 73.857 & 35.586 & 23.852 & 14.581 & 11.859 & 10.669 \\ 
 		Prop. of Var. & 0.426 & 0.099 & 0.044 & 0.017 & 0.011 & 0.009 \\ 
 		Cum. Prop. & 0.426 & 0.524 & 0.569 & 0.585 & 0.596 & 0.605 \\ 
 		\hline
 	\end{tabular}
+\caption{Detrend}
 \end{table}
 \end{frame}
 
@@ -191,7 +193,7 @@
 \begin{figure}
 	\centering
 	\includegraphics[width=0.9\linewidth]{../img/sample_plot}
-	\caption{Global Leaf Index at Time 1}
+	\caption{Global Leaf Index Jan 2005}
 	\label{fig:sampleplot}
 \end{figure}
 
@@ -282,9 +284,9 @@
 \frametitle{Principal Component Analysis}
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{../img/PCAde_pair}
-	\caption{Pair Plot}
-	\label{fig:pcade_pair}
+	\includegraphics[width=0.7\linewidth]{../img/PCAde_CCF}
+	\caption{Cross-Covariance Function}
+	\label{fig:pcadpeccf}
 \end{figure}
 \end{frame}
 
@@ -292,9 +294,9 @@
 \frametitle{Principal Component Analysis}
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{../img/PCAde_CCF}
-	\caption{Cross-Covariance Function}
-	\label{fig:pcadpeccf}
+	\includegraphics[width=0.7\linewidth]{../img/PCAde_pair}
+	\caption{Pair Plot}
+	\label{fig:pcade_pair}
 \end{figure}
 \end{frame}
 
@@ -315,7 +317,7 @@
 	\begin{figure}
 		\centering
 		\includegraphics[width=0.7\linewidth]{../img/PCA_pc1}
-		\caption{}
+		\caption{PC 1}
 		\label{fig:pcapc1}
 	\end{figure}
  \column{2.5in}
@@ -346,6 +348,7 @@
 	\item Residual standard error: 13.93 on 1138 degrees of freedom
 	\item Multiple R-squared:  0.9645,	Adjusted R-squared:  0.9644 
 	\item F-statistic: 1.545e+04 on 2 and 1138 DF,  p-value: < 2.2e-16
+	\item $\hat{X}_t = 102.5319\sin(2\pi\frac{1}{12} + 0.3241)$
 \end{itemize}
 \end{frame}
 
