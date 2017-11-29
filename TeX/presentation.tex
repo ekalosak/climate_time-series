@@ -12,221 +12,222 @@
 \date{}
 
 \begin{document}
-
-\frame{\titlepage}
-
+	
+	\frame{\titlepage}
+	
 \begin{frame}
-    \frametitle{Introduction: climate system}
-    \includegraphics[height=3in]{../img/ccsm_diagram_picture.jpeg}
-
-    https://www.ucar.edu/communications/CCSM/overview.html
+	\frametitle{Introduction: climate system}
+	\includegraphics[height=3in]{../img/ccsm_diagram_picture.jpeg}
+	
+	https://www.ucar.edu/communications/CCSM/overview.html
 \end{frame}
 
 \begin{frame}
-    \frametitle{Introduction: climate system modeling}
-    \begin{itemize}
-        \item Climate change is driven by anthropogenic carbon forcing
-        \item IPCC has developed representative carbon forcing trajectories
-        \item Computer simulations are run predicated on particular forcing
-            pathways
-        \item These simulations are realizations of gridded meteorological PDEs
-        \item The Community Climate Model System has 5 components and a coupler:
-            atmosphere, sea, land, sea ice, and land ice.
-    \end{itemize}
-    \includegraphics[width=\textwidth/2]{../img/greenland_pole_grid.jpg}
+\frametitle{Introduction: climate system modeling}
+\begin{itemize}
+	\item Climate change is driven by anthropogenic carbon forcing
+	\item IPCC has developed representative carbon forcing trajectories
+	\item Computer simulations are run predicated on particular forcing
+	pathways
+	\item These simulations are realizations of gridded meteorological PDEs
+	\item The Community Climate Model System has 5 components and a coupler:
+	atmosphere, sea, land, sea ice, and land ice.
+\end{itemize}
+\includegraphics[width=\textwidth/2]{../img/greenland_pole_grid.jpg}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Introduction: climate system modeling}
-    \begin{itemize}
-        \item We focus on the land system output from a single ensemble under
-            the RCP4.5 experiment.
+\frametitle{Introduction: climate system modeling}
+\begin{itemize}
+\item We focus on the land system output from a single ensemble under
+the RCP4.5 experiment.
 
-        \item $\theta\in\Theta, \{X_t|t\in\mathbb{Z}\} \textrm{ where }
-            X_t\sim Proc_\theta$\\
-            $X_t = [X_t^{(l)}] \textrm{ for } l\in L = lat\times lon$
-    \end{itemize}
+\item $\theta\in\Theta, \{X_t|t\in\mathbb{Z}\} \textrm{ where }
+X_t\sim Proc_\theta$\\
+$X_t = [X_t^{(l)}] \textrm{ for } l\in L = lat\times lon$
+\end{itemize}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Introduction: leaf area index (LAI)}
-    \begin{columns}
+\frametitle{Introduction: leaf area index (LAI)}
+\begin{columns}
 
-        \column{2in}
-            \begin{itemize}
-                \item LAI is unitless quantity (leaf area ($m^2$))/(ground area ($m^2$))
-                \item "Comparative Physiological Studies on the Growth of Field Crops" Watson 1947 Annals of Botany
-                \item Bounded below by 0, above by physiological limits
-            \end{itemize}
+\column{2in}
+\begin{itemize}
+\item LAI is unitless quantity (leaf area ($m^2$))/(ground area ($m^2$))
+\item "Comparative Physiological Studies on the Growth of Field Crops" Watson 1947 Annals of Botany
+\item Bounded below by 0, above by physiological limits
+\end{itemize}
 
-        \column{3in}
-            \includegraphics[width=\columnwidth,height=\textheight,keepaspectratio]{../img/lai.png}\\
-            \includegraphics[width=\columnwidth,height=\textheight,keepaspectratio]{../img/lai2.png}
+\column{3in}
+\includegraphics[width=\columnwidth,height=\textheight,keepaspectratio]{../img/lai.png}\\
+\includegraphics[width=\columnwidth,height=\textheight,keepaspectratio]{../img/lai2.png}
 
-    \end{columns}
+\end{columns}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Introduction: Sub-Saharan African LAI}
-    \begin{columns}
+\frametitle{Introduction: Sub-Saharan African LAI}
+\begin{columns}
 
-        \column{2in}
-            \begin{itemize}
-                \item Initially, use only one location $l=l_0$.
-                \item Depicted under black circle on plot
-            \end{itemize}
+\column{2in}
+\begin{itemize}
+\item Initially, use only one location $l=l_0$.
+\item Depicted under black circle on plot
+\end{itemize}
 
-        \column{3in}
-            \includegraphics[height=3in]{../img/LAI_global_t0.png}
+\column{3in}
+\includegraphics[height=3in]{../img/LAI_global_t0.png}
 
-    \end{columns}
-\end{frame}
-
-
-\begin{frame}
-    \frametitle{Raw data}
-    \includegraphics[height=3in]{../img/pacf_acf_raw.png}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Detrended data}
-    \includegraphics[height=3in]{../img/detrended_acf_pacf.png}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Standardize variance}
-    \includegraphics[height=3in]{../img/standatdized_var_LAI.png}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Standardized variance}
-    \includegraphics[height=3in]{../img/detrended_stdzd_acf_pacf.png}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Differenced data}
-    \includegraphics[height=3in]{../img/differenced_acf_pacf.png}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Deseasonized data}
-    \includegraphics[height=3in]{../img/deseasonalization_spectrum.png}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Deseasonized data}
-    \includegraphics[height=3in]{../img/deseasonalization_resid.png}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Deseasonized data}
-    \includegraphics[height=3in]{../img/deseasonalization_resid_difference.png}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Deseasonized data}
-    \includegraphics[height=3in]{../img/deseasonalization.png}
-\end{frame}
-
-\begin{frame}
-    \frametitle{AR(4)}
-    \includegraphics[height=3in]{../img/ar_sim.png}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Changepoint Analysis}
-	\begin{figure}
-		\centering
-		\includegraphics[width=0.75\linewidth]{../img/changepointex.png}
-		\caption{Example of a Changepoint}
-		
-		http://members.cbio.mines-paristech.fr/~thocking/change-tutorial/RK-CptWorkshop.html
-	\end{figure}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Changepoint Analysis}
-	\begin{itemize}
-		\item Conceptually, for data $Z_1,...,Z_n$, a changepoint $\tau$ is a point in time, such that $Z_1,...,Z_\tau$ differ from  $Z_\tau+1,...,Z_n$
-		\item How do we detect where a changepoint occurs, mathematically?
-		\item We focus on the simple case where there is at most one changepoint to illustrate the method
-		\item One approach is to use a Likelihood Ratio Test.
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Changepoint Analysis: Simple Example}
-	\begin{itemize}
-		\item Assume the parametric form $Z_t|\theta_t~N(\theta_t,1)$
-		\item We state the hypotheses as: 		\item $H_0:\theta_t=\theta~ \forall t \text{ vs. } H_1:\theta_t=\theta_1,~t\leq\tau;~ \theta_t=\theta_2,~t>\tau   $
-		\item To use a likelihood ratio method, we need to maximize the likelihood under the null and alternative
-		\item Under $H_0$, the maximum log-likelihood is $\log p(y_{1:n}|\hat{\theta})$
-		\item Under $H_1$ with a changepoint $\tau$, the maximum log-likelihood is $ML(\tau) = \log p(y_{1:\tau}|\hat{\theta}_1) +  \log p(y_{\tau+1:n}|\hat{\theta}_1)$. 
-		\item  $p(\cdot)$ is the probability density function associated with the distribution of the data and $\hat{\theta}$ is
-		the maximum likelihood estimate of the parameters.
-	\end{itemize}
+\end{columns}
 \end{frame}
 
 
 \begin{frame}
-	\frametitle{Changepoint Analysis: Test Statistic}
-	\begin{itemize}
-		\item The log-LR statistic is then: 
-		\begin{equation*}
-		LR(\tau)=2\left[\max_\tau ML(\tau)-\log p(y_{1:n}|\hat{\theta})\right]\
-		\end{equation*}
-		\item We compare this statistic with a cut-off value, $\lambda$. If $LR>\lambda$, then we reject $H_0$ and estimate the changepoint as 
-		\begin{equation*}
-		\hat{\tau}=\arg\max_\tau LR(\tau)
-		\end{equation*}
-		\item There are many different ways to select $\lambda$. Selecting an optimal value of $\lambda$ remains an open research topic.
-		\item We use the package 'changepoint'
-		to investigate if our LAI time series has a changepoint.
-	\end{itemize}
+\frametitle{Raw data}
+\includegraphics[height=3in]{../img/pacf_acf_raw.png}
 \end{frame}
 
 \begin{frame}
-	\frametitle{Changepoint Analysis on LAI TS}
-	\begin{figure}
-	\centering
-	\includegraphics[width=0.55\linewidth]{../img/changepoint_LAI.png}
-	\caption{LAI TS}
-	\end{figure}
-	\begin{itemize}
-		\item Result: $\hat{\tau}= 237$ months after Jan. 2005, i.e. 2026 is when LAI experiences a changepoint in mean.
-	\end{itemize}
+\frametitle{Detrended data}
+\includegraphics[height=3in]{../img/detrended_acf_pacf.png}
 \end{frame}
 
 \begin{frame}
-	\frametitle{Changepoint Analysis: Interpretation}
-	\begin{itemize}
-		\item This data is simulated with carbon emissions to peak in 2020. Even so, the changepoint occurs in 2026, implying that the chain of events that cause the shift may have been set into motion years before the changepoint actually occurs.
-		\item If this is the case, it seems that even the optimistic outcome of curbing carbon emissions by 2020 may be too late. The domino may have already been pushed.
-	\end{itemize}
+\frametitle{Standardize variance}
+\includegraphics[height=3in]{../img/standatdized_var_LAI.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Standardized variance}
+\includegraphics[height=3in]{../img/detrended_stdzd_acf_pacf.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Differenced data}
+\includegraphics[height=3in]{../img/differenced_acf_pacf.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Deseasonized data}
+\includegraphics[height=3in]{../img/deseasonalization_spectrum.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Deseasonized data}
+\includegraphics[height=3in]{../img/deseasonalization_resid.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Deseasonized data}
+\includegraphics[height=3in]{../img/deseasonalization_resid_difference.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Deseasonized data}
+\includegraphics[height=3in]{../img/deseasonalization.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{AR(4)}
+\includegraphics[height=3in]{../img/ar_sim.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Changepoint Analysis}
+\begin{figure}
+\centering
+\includegraphics[width=0.75\linewidth]{../img/changepointex.png}
+\caption{Example of a Changepoint}
+
+http://members.cbio.mines-paristech.fr/~thocking/change-tutorial/RK-CptWorkshop.html
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Changepoint Analysis}
+\begin{itemize}
+\item Conceptually, for data $Z_1,...,Z_n$, a changepoint $\tau$ is a point in time, such that $Z_1,...,Z_\tau$ differ from  $Z_\tau+1,...,Z_n$
+\item How do we detect where a changepoint occurs, mathematically?
+\item We focus on the simple case where there is at most one changepoint to illustrate the method
+\item One approach is to use a Likelihood Ratio Test.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Changepoint Analysis: Simple Example}
+\begin{itemize}
+\item Assume the parametric form $Z_t|\theta_t~N(\theta_t,1)$
+\item We state the hypotheses as: 		\item $H_0:\theta_t=\theta~ \forall t \text{ vs. } H_1:\theta_t=\theta_1,~t\leq\tau;~ \theta_t=\theta_2,~t>\tau   $
+\item To use a likelihood ratio method, we need to maximize the likelihood under the null and alternative
+\item Under $H_0$, the maximum log-likelihood is $\log p(y_{1:n}|\hat{\theta})$
+\item Under $H_1$ with a changepoint $\tau$, the maximum log-likelihood is $ML(\tau) = \log p(y_{1:\tau}|\hat{\theta}_1) +  \log p(y_{\tau+1:n}|\hat{\theta}_1)$. 
+\item  $p(\cdot)$ is the probability density function associated with the distribution of the data and $\hat{\theta}$ is
+the maximum likelihood estimate of the parameters.
+\end{itemize}
 \end{frame}
 
 
 \begin{frame}
-	\frametitle{Spectral Analysis: Periodogram}
-	\begin{figure}
-		\centering
-		\includegraphics[width=0.5\linewidth]{../img/RawSpec_LAI.png}
-		\caption{LAI TS}
-	\end{figure}
-	Peaks at $\omega=\frac{1}{12},\frac{2}{12}, \frac{3}{12}...$etc., indicating annual, semiannual, quarterly...etc. periods. We investigate these periods further after noticing some curious behavior in our principal component analysis.
+\frametitle{Changepoint Analysis: Test Statistic}
+\begin{itemize}
+\item The log-LR statistic is then: 
+\begin{equation*}
+LR(\tau)=2\left[\max_\tau ML(\tau)-\log p(y_{1:n}|\hat{\theta})\right]\
+\end{equation*}
+\item We compare this statistic with a cut-off value, $\lambda$. If $LR>\lambda$, then we reject $H_0$ and estimate the changepoint as 
+\begin{equation*}
+\hat{\tau}=\arg\max_\tau LR(\tau)
+\end{equation*}
+\item There are many different ways to select $\lambda$. Selecting an optimal value of $\lambda$ remains an open research topic.
+\item We use the package 'changepoint'
+to investigate if our LAI time series has a changepoint.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Changepoint Analysis on LAI TS}
+\begin{figure}
+\centering
+\includegraphics[width=0.55\linewidth]{../img/changepoint_LAI.png}
+\caption{LAI TS}
+\end{figure}
+\begin{itemize}
+\item Result: $\hat{\tau}= 237$ months after Jan. 2005, i.e. 2026 is when LAI experiences a changepoint in mean.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Changepoint Analysis: Interpretation}
+\begin{itemize}
+\item This data is simulated with carbon emissions to peak in 2020. Even so, the changepoint occurs in 2026, implying that the chain of events that cause the shift may have been set into motion years before the changepoint actually occurs.
+\item If this is the case, it seems that even the optimistic outcome of curbing carbon emissions by 2020 may be too late. The domino may have already been pushed.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Spectral Analysis: Periodogram}
+\begin{figure}
+\centering
+\includegraphics[width=0.5\linewidth]{../img/RawSpec_LAI.png}
+\caption{LAI TS}
+\end{figure}
+Peaks at $\omega=\frac{1}{12},\frac{2}{12}, \frac{3}{12}...$etc., indicating annual, semiannual, quarterly...etc. periods. We investigate these periods further after noticing some curious behavior in our principal component analysis.
 \end{frame}
 
 \begin{frame}
 \frametitle{Principal Component Analysis}
 \begin{itemize}
-	\item 12818 locations, 1140 time points
-	\item $\mathbf{Z}(s,t) = \mathbf{U}\mathbf{\Lambda}\mathbf{V}^T$  
-	\item $\mathbf{Z}(s,t)  = \begin{pmatrix}
-	z(s_1, t_1) & z(s_2, t_1) & z(s_3, t_1) & \dots & z(s_{12818}, t_1) \\
-	z(s_1, t_2) & z(s_2, t_2) & z(s_3, t_2) & \dots & z(s_{12818}, t_2) \\
-	\vdots & \vdots & \vdots & \ddots & \vdots\\
-	z(s_1, t_{1140}) & z(s_2, t_{1140}) & z(s_3, t_{1140}) & \dots & z(s_{12818}, t_{1140})\\ 
-	\end{pmatrix}$
+\item 12818 locations, 1140 time points
+\item $\mathbf{Z}(s,t) = \mathbf{U}\mathbf{\Lambda}\mathbf{V}^T$  
+\item $\mathbf{Z}(s,t)  = \begin{pmatrix}
+z(s_1, t_1) & z(s_2, t_1) & z(s_3, t_1) & \dots & z(s_{12818}, t_1) \\
+z(s_1, t_2) & z(s_2, t_2) & z(s_3, t_2) & \dots & z(s_{12818}, t_2) \\
+\vdots & \vdots & \vdots & \ddots & \vdots\\
+z(s_1, t_{1140}) & z(s_2, t_{1140}) & z(s_3, t_{1140}) & \dots & z(s_{12818}, t_{1140})\\ 
+\end{pmatrix}$
+\item $\mathbf{U} : 12818 \times 1140,  \mathbf{V} : 1140 \times 1140$
 \end{itemize}
 \end{frame}
 
@@ -234,219 +235,219 @@
 \begin{frame}
 \frametitle{Principal Component Analysis}
 \begin{columns}
-	\column{2in}
-	\begin{table}[ht]
-		\begin{figure}
-			\centering
-			\includegraphics[height=0.7\textheight]{../img/Scree_plot1}
-			\caption{Raw Data}
-			\label{fig:screeplot1}
-		\end{figure}
-	\end{table}
-	\column{2in}
-	\begin{table}[ht]
-	\begin{figure}
-		\centering
-		\includegraphics[height=0.7\textheight]{../img/Scree_plot2}
-		\caption{Detrend Data}
-		\label{fig:screeplot2}
-	\end{figure}
+\column{2in}
+\begin{table}[ht]
+\begin{figure}
+\centering
+\includegraphics[height=0.7\textheight]{../img/Scree_plot1}
+\caption{Raw Data}
+\label{fig:screeplot1}
+\end{figure}
 \end{table}
-		
+\column{2in}
+\begin{table}[ht]
+\begin{figure}
+\centering
+\includegraphics[height=0.7\textheight]{../img/Scree_plot2}
+\caption{Detrend Data}
+\label{fig:screeplot2}
+\end{figure}
+\end{table}
+
 \end{columns}
 \end{frame}
 
 \begin{frame}
 \frametitle{Principal Component Analysis}
 \begin{table}[ht]
-	\centering
-	\begin{tabular}{rrrrrrr}
-		\hline
-		& PC1 & PC2 & PC3 & PC4 & PC5 & PC6 \\ 
-		\hline
-		StDiv & 66.650 & 28.003 & 24.356 & 20.348 & 17.832 & 12.301 \\ 
-		Prop. of Var. & 0.347 & 0.061 & 0.046 & 0.032 & 0.025 & 0.012 \\ 
-		Cum. Prop.& 0.347 & 0.408 & 0.454 & 0.486 & 0.511 & 0.523 \\ 
-		\hline
-	\end{tabular}
+\centering
+\begin{tabular}{rrrrrrr}
+\hline
+& PC1 & PC2 & PC3 & PC4 & PC5 & PC6 \\ 
+\hline
+StDiv & 66.650 & 28.003 & 24.356 & 20.348 & 17.832 & 12.301 \\ 
+Prop. of Var. & 0.347 & 0.061 & 0.046 & 0.032 & 0.025 & 0.012 \\ 
+Cum. Prop.& 0.347 & 0.408 & 0.454 & 0.486 & 0.511 & 0.523 \\ 
+\hline
+\end{tabular}
 \caption{Raw Data}
 \end{table}
 \begin{table}[ht]
-	\centering
-	\begin{tabular}{rrrrrrr}
-		\hline
-		& PC1 & PC2 & PC3 & PC4 & PC5 & PC6 \\ 
-		\hline
-		StDiv & 73.857 & 35.586 & 23.852 & 14.581 & 11.859 & 10.669 \\ 
-		Prop. of Var. & 0.426 & 0.099 & 0.044 & 0.017 & 0.011 & 0.009 \\ 
-		Cum. Prop. & 0.426 & 0.524 & 0.569 & 0.585 & 0.596 & 0.605 \\ 
-		\hline
-	\end{tabular}
+\centering
+\begin{tabular}{rrrrrrr}
+\hline
+& PC1 & PC2 & PC3 & PC4 & PC5 & PC6 \\ 
+\hline
+StDiv & 73.857 & 35.586 & 23.852 & 14.581 & 11.859 & 10.669 \\ 
+Prop. of Var. & 0.426 & 0.099 & 0.044 & 0.017 & 0.011 & 0.009 \\ 
+Cum. Prop. & 0.426 & 0.524 & 0.569 & 0.585 & 0.596 & 0.605 \\ 
+\hline
+\end{tabular}
 \caption{Detrend}
 \end{table}
 \end{frame}
 
-\begin{frame}
-\frametitle{Principal Component Analysis}
-\begin{figure}
-	\centering
-	\includegraphics[width=0.9\linewidth]{../img/sample_plot}
-	\caption{Global Leaf Index Jan 2005}
-	\label{fig:sampleplot}
-\end{figure}
+%\begin{frame}
+%\frametitle{Principal Component Analysis}
+%\begin{figure}
+%\centering
+%\includegraphics[width=0.9\linewidth]{../img/sample_plot}
+%\caption{Global Leaf Index Jan 2005}
+%\label{fig:sampleplot}
+%\end{figure}
+%\end{frame}
 
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Principal Component Analysis}
-\begin{figure}
-	\centering
-	\includegraphics[width=0.9\linewidth]{../img/loading_PC1_de}
-	\caption{Loadings of Principal Component 1}
-	\label{fig:loadingpc1}
-\end{figure}
-\end{frame}
 
 \begin{frame}
 \frametitle{Principal Component Analysis}
 \begin{figure}
-	\centering
-	\includegraphics[width=0.9\linewidth]{../img/loading_PC2_de}
-	\caption{Loadings of Principal Component 2}
-	\label{fig:loadingpc2}
+\centering
+\includegraphics[width=0.9\linewidth]{../img/loading_PC1_de}
+\caption{Loadings of Principal Component 1}
+\label{fig:loadingpc1}
 \end{figure}
 \end{frame}
 
 \begin{frame}
 \frametitle{Principal Component Analysis}
 \begin{figure}
-	\centering
-	\includegraphics[width=0.9\linewidth]{../img/loading_PC3_de}
-	\caption{Loadings of Principal Component 3}
-	\label{fig:loadingpc3}
+\centering
+\includegraphics[width=0.9\linewidth]{../img/loading_PC2_de}
+\caption{Loadings of Principal Component 2}
+\label{fig:loadingpc2}
+\end{figure}
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Principal Component Analysis}
+%\begin{figure}
+%\centering
+%\includegraphics[width=0.9\linewidth]{../img/loading_PC3_de}
+%\caption{Loadings of Principal Component 3}
+%\label{fig:loadingpc3}
+%\end{figure}
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{Principal Component Analysis}
+%\begin{figure}
+%\centering
+%\includegraphics[width=0.9\linewidth]{../img/loading_PC4_de}
+%\caption{Loadings of Principal Component 4}
+%\label{fig:loadingpc4}
+%\end{figure}
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{Principal Component Analysis}
+%\begin{figure}
+%\centering
+%\includegraphics[width=0.9\linewidth]{../img/loading_PC5_de}
+%\caption{Loadings of Principal Component 5}
+%\label{fig:loadingpc5}
+%\end{figure}
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{Principal Component Analysis}
+%\begin{figure}
+%\centering
+%\includegraphics[width=0.9\linewidth]{../img/loading_PC6_de}
+%\caption{Loadings of Principal Component 6}
+%\label{fig:loadingpc6}
+%\end{figure}
+%\end{frame}
+
+\begin{frame}
+\frametitle{Principal Component Analysis}
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{../img/PCAde_ACF}
+\caption{Auto-Covariance Function}
+\label{fig:pcadeacf}
 \end{figure}
 \end{frame}
 
 \begin{frame}
 \frametitle{Principal Component Analysis}
 \begin{figure}
-	\centering
-	\includegraphics[width=0.9\linewidth]{../img/loading_PC4_de}
-	\caption{Loadings of Principal Component 4}
-	\label{fig:loadingpc4}
+\centering
+\includegraphics[width=0.7\linewidth]{../img/PCAde_pacf}
+\caption{Partial ACF}
+\label{fig:pcadpeacf}
 \end{figure}
 \end{frame}
 
 \begin{frame}
 \frametitle{Principal Component Analysis}
 \begin{figure}
-	\centering
-	\includegraphics[width=0.9\linewidth]{../img/loading_PC5_de}
-	\caption{Loadings of Principal Component 5}
-	\label{fig:loadingpc5}
+\centering
+\includegraphics[width=0.7\linewidth]{../img/PCAde_CCF}
+\caption{Cross-Covariance Function}
+\label{fig:pcadpeccf}
 \end{figure}
 \end{frame}
 
 \begin{frame}
 \frametitle{Principal Component Analysis}
 \begin{figure}
-	\centering
-	\includegraphics[width=0.9\linewidth]{../img/loading_PC6_de}
-	\caption{Loadings of Principal Component 6}
-	\label{fig:loadingpc6}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{Principal Component Analysis}
-\begin{figure}
-	\centering
-	\includegraphics[width=0.7\linewidth]{../img/PCAde_ACF}
-	\caption{Auto-Covariance Function}
-	\label{fig:pcadeacf}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{Principal Component Analysis}
-\begin{figure}
-	\centering
-	\includegraphics[width=0.7\linewidth]{../img/PCAde_pacf}
-	\caption{Partial ACF}
-	\label{fig:pcadpeacf}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{Principal Component Analysis}
-\begin{figure}
-	\centering
-	\includegraphics[width=0.7\linewidth]{../img/PCAde_CCF}
-	\caption{Cross-Covariance Function}
-	\label{fig:pcadpeccf}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{Principal Component Analysis}
-\begin{figure}
-	\centering
-	\includegraphics[width=0.7\linewidth]{../img/PCAde_pair}
-	\caption{Pair Plot}
-	\label{fig:pcade_pair}
+\centering
+\includegraphics[width=0.7\linewidth]{../img/PCAde_pair}
+\caption{Pair Plot}
+\label{fig:pcade_pair}
 \end{figure}
 \end{frame}
 
 \begin{frame}
 \frametitle{PCA: Spectal Analysis}
 \begin{figure}
-	\centering
-	\includegraphics[width=0.7\linewidth]{../img/PCA_periodogram}
-	\caption{Periodogram}
-	\label{fig:pcaperiodogram}
+\centering
+\includegraphics[width=0.7\linewidth]{../img/PCA_periodogram}
+\caption{Periodogram}
+\label{fig:pcaperiodogram}
 \end{figure}
 \end{frame}
 
 \begin{frame}
 \frametitle{PCA: Spectal Analysis}
 \begin{columns}
-	\column{2.5in}
-	\begin{figure}
-		\centering
-		\includegraphics[width=0.7\linewidth]{../img/PCA_pc1}
-		\caption{PC 1}
-		\label{fig:pcapc1}
-	\end{figure}
- \column{2.5in}
- \begin{align*}
- X_t &= A\cos(2\pi\frac{1}{12}t) + B\sin(2\pi\frac{1}{12}t)  \\ 
- &= R\sin(2\pi\frac{1}{12} + \varphi)\\
- & \text{ where } R^2 = A^2 + B^2, \\
- &\varphi = \arctan(\frac{A}{B}) \\
- \gamma(h) &= \sigma^2\cos(2\pi\frac{1}{12}h) \\
- \end{align*}
+\column{2.5in}
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{../img/PCA_pc1}
+\caption{PC 1}
+\label{fig:pcapc1}
+\end{figure}
+\column{2.5in}
+\begin{align*}
+X_t &= A\cos(2\pi\frac{1}{12}t) + B\sin(2\pi\frac{1}{12}t)  \\ 
+&= R\sin(2\pi\frac{1}{12} + \varphi)\\
+& \text{ where } R^2 = A^2 + B^2, \\
+&\varphi = \arctan(\frac{A}{B}) \\
+\gamma(h) &= \sigma^2\cos(2\pi\frac{1}{12}h) \\
+\end{align*}
 \end{columns}
 \end{frame}
 
 \begin{frame}
 \frametitle{PCA: Spectal Analysis}
 \begin{table}[ht]
-	\centering
-	\begin{tabular}{rrrrr}
-		\hline
-		& Estimate & Std. Error & t value & Pr($>$$|$t$|$) \\ 
-		\hline
-		cos(2 * pi/12 * 1:1140) & -32.6520 & 0.5834 & -55.97 & 0.0000 \\ 
-		sin(2 * pi/12 * 1:1140) & -97.1938 & 0.5834 & -166.61 & 0.0000 \\ 
-		\hline
-	\end{tabular}
+\centering
+\begin{tabular}{rrrrr}
+\hline
+& Estimate & Std. Error & t value & Pr($>$$|$t$|$) \\ 
+\hline
+cos(2 * pi/12 * 1:1140) & -32.6520 & 0.5834 & -55.97 & 0.0000 \\ 
+sin(2 * pi/12 * 1:1140) & -97.1938 & 0.5834 & -166.61 & 0.0000 \\ 
+\hline
+\end{tabular}
 \end{table}
 \begin{itemize}
-	\item Residual standard error: 13.93 on 1138 degrees of freedom
-	\item Multiple R-squared:  0.9645,	Adjusted R-squared:  0.9644 
-	\item F-statistic: 1.545e+04 on 2 and 1138 DF,  p-value: $<$ 2.2e-16
-	\item $\hat{X}_t = 102.5319\sin(2\pi\frac{1}{12} + 0.3241)$
+\item Residual standard error: 13.93 on 1138 degrees of freedom
+\item Multiple R-squared:  0.9645,	Adjusted R-squared:  0.9644 
+\item F-statistic: 1.545e+04 on 2 and 1138 DF,  p-value: $<$ 2.2e-16
+\item $\hat{X}_t = 102.5319\sin(2\pi\frac{1}{12} + \frac{\pi}{10})$ %0.3240 , 18.5695620999972206
+\item PC2: $\hat{X}_t = 48.96085\sin(2\pi\frac{1}{12}-\frac{2\pi}{5} ), \hat{\sigma}^2 = 8.17$ %(-72.464665252)
 \end{itemize}
 \end{frame}
 
