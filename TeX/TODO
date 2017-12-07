@@ -1,0 +1,14 @@
+(0) Give as much details as are available on the model producing the simulated
+data.
+(1) Describe the location of the time series that was used for Eric and Cody's
+analysis (where, what vegetation, etc.).
+(2) Compute the zeros of the AR(4) process you fitted to the detrended data. Are
+they complex-valued pairs? (Is the AR mimicking the cyclical behavior?)
+(3) For the change-point analysis, redo the testing on the subsamples obtained
+from splitting at the estimated change-point (note: multiple testing).
+(4) For the spatial part, plot the overall spatial mean function. Try to
+interpret the effects of the spacial principal components. 
+(5) How do the residuals look after you regress out the dominant annual cycles
+from the principal component score series? Are they white noise or is there
+more?
+
