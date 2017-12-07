@@ -248,7 +248,12 @@ We compare this statistic with a cut-off value, $\lambda$. If $LR>\lambda$, then
 \hat{\tau}=\arg\max_\tau LR(\tau)
 \end{equation*}
 There are many different ways to select $\lambda$. Selecting an optimal value of $\lambda$ remains an open research topic in changepoint analysis. We use the package 'changepoint' to investigate if our LAI time series has a changepoint, using a specific $\lambda$ value that takes into consideration the inherent correlation between observations of a time series.
-
+\begin{figure}
+	\centering
+	\includegraphics[width=0.55\linewidth]{../img/changepoint_LAI.png}
+	\caption{LAI TS}
+\end{figure}
+We find an estimated changepoint of $\hat{\tau}= 237$ months after Jan. 2005, i.e. 2026 is when LAI experiences a changepoint in mean. Looking at the series after 2026 though, we suspect there may be more time points. So we segment 
 
 
 
