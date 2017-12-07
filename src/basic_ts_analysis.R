@@ -111,7 +111,7 @@ dev.off()
 png(filename="../img/deseasonalization_spectrum.png")
 par(mfrow=c(2,1))
 
-m = ar(d.af.detr)
+m = ar(d.af.detr, order.max=12)
 s = spec.ar(m, main=paste("Spectrum of AR(", m$order, ") ~ detrended",
                           sep=""))
 abline(v=0.01402806) # largest spectral peak (1/0.014 = 72)
