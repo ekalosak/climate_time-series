@@ -29,14 +29,5 @@ raw.spec <- spec.pgram(d.af, main="Periodogram of Raw TS",
                        col="purple", detrend = F, taper=0.1)
 dev.off()
 
-#Fitted spec:
-## spectral analysis
-png(filename="../img/DeseasonedSpec_LAI.png")
-sp = spec.pgram(na.omit(d.af.deseas), main="Periodogram of Deseasoned TS",
-             col="purple", detrend = F)
-dev.off()
-png(filename="../img/DifferencedSpec_LAI.png")
-sp = spec.pgram(na.omit(d.af.diff), main="Periodogram of Differenced TS",
-                                col="purple", detrend = F) 
-dev.off()
+
 
