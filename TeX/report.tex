@@ -1,0 +1,204 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{subfig}
+%opening
+\title{Tree Cover Variability Increases from 2005 to 2100\\ in Sub-Saharan Africa}
+\author{ Cody Carroll, Eric Kalosa-Kenyon, Amy Kim}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+\section{Principal Component Analysis}
+\paragraph{} 
+We have done the time series analysis for the one location, and we can expand our analysis into global scale. This becomes the analysis of space-time with a large dataset (12818 locations and 1140 time points). In order to extract the underlying trends, we can consider Principal Component Analysis for examining both the spatial and temporal variation here. 
+
+Principal component: Temporal pattern (true values x loadings) vs. loadings of each principal components: Spatial Pattern - eigenvectors
+\paragraph{Principal Component Analysis}
+\begin{equation}
+\mathbf{Z}(s,t) = \mathbf{U}\mathbf{\Lambda}\mathbf{V}^T
+\end{equation}
+where $\mathbf{U}$ is a $T \times k$ orthogonal matrix with columns $\mathbf{u}_j, \mathbf{V}$ is a $S \times k$ orthogonal matrix with columns $\mathbf{v}_j$ and $\mathbf{\Lambda}$ is a $k \times k$ diagonal matrix with diagonal entries $\lambda_j$. This $\mathbf{Z}$: 
+\begin{equation}
+\mathbf{Z}(s,t)  = \begin{pmatrix}
+z(s_1, t_1) & z(s_2, t_1) & z(s_3, t_1) & \dots & z(s_{12818}, t_1) \\
+z(s_1, t_2) & z(s_2, t_2) & z(s_3, t_2) & \dots & z(s_{12818}, t_2) \\
+\vdots & \vdots & \vdots & \ddots & \vdots\\
+z(s_1, t_{1140}) & z(s_2, t_{1140}) & z(s_3, t_{1140}) & \dots & z(s_{12818}, t_{1140})\\ 
+\end{pmatrix}
+\end{equation}
+
+We decide to report PCA on a detrend dataset~\footnote{We used cubic splines for each time series to extract variations} since its first few Principal Components(PCs) have more cumulative explained variances. We mainly examine the first Principal Component(PC) since it explains 43\% of variances and others do less then 10\% (Table~\ref{table:detrendprop})~\footnote{419 PCs achieve to explain 90\% of variations.}.
+
+%rotation	
+%the matrix of variable loadings (i.e., a matrix whose columns contain the eigenvectors). The function princomp returns this in the element loadings.
+%x	
+%if retx is true the value of the rotated data (the centred (and scaled if requested) data multiplied by the rotation matrix) is returned. Hence, cov(x) is the diagonal matrix diag(sdev^2). For the formula method, napredict() is applied to handle the treatment of values omitted by the na.action.
+\subsection{Spatial Pattern}
+Spatial pattern explains how strong the PCs depend on some locations, and it is represented by the loadings of each principal components. The mean spatial structure, Figure~\ref{fig:scalepcade}, indicates locations known forest area higher mean values(red) and desert areas have lower values (blue).  We can interpret PC1 implies main variance across the all locations and over the 95 years, Figure~\ref{fig:pc1}. It shows forest areas have negative effects(blue) and infertile lands have positive effects(red) which contracts to mean structure. 
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{../img/Scale_PCA_de}
+	\caption{Overall Spatial Mean}
+	\label{fig:scalepcade}
+\end{figure}
+
+\begin{figure}
+	\centering
+	{\includegraphics[width=0.7\linewidth]{../img/loading_PC1_de}}\label{fig:pc1-spatial}
+%	\subfloat[PC 1]{\includegraphics[width=0.45\linewidth]{../img/loading_PC1_de}}\label{fig:pc1}
+%	\hfill
+%	\subfloat[PC 2]{\includegraphics[width=0.45\linewidth]{../img/loading_PC2_de}}\label{fig:pc2}
+%	\subfloat[PC 3]{\includegraphics[width=0.45\linewidth]{../img/loading_PC3_de}}\label{fig:pc3}
+%	\hfill
+%	\subfloat[PC 4]{\includegraphics[width=0.45\linewidth]{../img/loading_PC4_de}}\label{fig:pc4}
+	\caption{Spatial Pattern of PC 1}
+\end{figure}
+
+\subsection{Temporal Pattern}
+Temporal pattern explains the dominant temporal variation of time series in the all locations, and it is represented by principal components (PCs, a number of time series) of PCA.  We can confirm the detrend first three PC are stationary in Figure~\ref{fig:pc-tsde}, and the first PC has widest range of oscillation(black) and ranges of oscillation get smaller (Blue is the second PC, and red is the third.)
+\begin{figure}
+	\centering
+%	\subfloat[Raw Data]{\includegraphics[width=0.7\linewidth]{../img/PC-ts}}\label{fig:ts1}
+	\subfloat[Detrened Data]{\includegraphics[width=0.7\linewidth]{../img/PC-ts_de}}\label{fig:ts2}
+	\caption{PC temporal patterns}
+	\label{fig:pc-tsde}
+\end{figure}
+
+We have found the PCs have seasonality through ACF in Figure~\ref{fig:pcadeacf}. PC1 and PC2 have annual seasonality, PC3 and PC4 have semi-annual, and PC5 and PC6 have quarterly seasonality, which get supported by periodograms, Figure~\ref{fig:pcaperiodogram}. It has positive and negative sides, which makes sense because the dataset has covered both north and south hemispheres. Additionally, PC1 and PC2 seems to have similar structures behind as well as PC3 and PC4 and PC5 and PC6 via the Cross-Covariance Functions in Figure~\ref{fig:pcadpeccf}. Since those have the obvious seasonality, we conduct spectral analysis on PC 1.
+
+
+\paragraph{Spectral Analysis}
+We model the first principal component (PC1) which has annual seasonality as:
+\begin{align}
+X_t &= A\cos(2\pi\frac{1}{12}t) + B\sin(2\pi\frac{1}{12}t)  \\ 
+&= R\sin(2\pi\frac{1}{12} + \varphi)\\
+\gamma(h) &= \sigma^2\cos(2\pi\frac{1}{12}h) 
+\end{align}
+where $R^2 = A^2 + B^2, \varphi = \arctan(\frac{A}{B})$.
+
+
+Here is our fitted model:
+\begin{align}
+\hat{X}_t & = -32.652 \cos(2\pi\frac{1}{12}t) -97.1938 \sin(2\pi\frac{1}{12}t) \\
+&= 102.5319\sin(2\pi\frac{1}{12}t + \frac{\pi}{10})\\
+\hat{\gamma}(h) &= 13.93^2\cos(2\pi\frac{1}{12}h) 
+\end{align}
+
+This model can explains 96\% variances (Adjusted $R^2$ is 0.9644). The PC 2 can be fitted by 
+\begin{equation}
+\hat{X}_t = 48.96085\sin(2\pi\frac{1}{12}-\frac{2\pi}{5} ),\; \hat{\sigma}^2 = 8.17
+\end{equation}
+which is shifted and smaller oscillations with respect to PC1 model. 
+
+\paragraph{} Interestingly, we find another cycles from the residuals of the PC1 model.  If we allow to add more cyclic variables, we could end up:
+\begin{align}
+X_t &= c_1\cos(2\pi\frac{1}{12}t) + c_2\sin(2\pi\frac{1}{12}t) + c_3\cos(2\pi\frac{1}{6}t) + c_4\sin(2\pi\frac{1}{6}t) \notag\\
+&+ c_5\cos(2\pi\frac{1}{4}t) + c_6\cos(2\pi\frac{1}{3}t) + c_7\sin(2\pi\frac{1}{3}t)  + c_8\sin(2\pi t)
+\end{align}
+this model can explain 99.62\% variances. 
+
+\appendix
+\section{PCA}
+\subsection{Tables}
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{rrrrrrr}
+		\hline
+		& PC1 & PC2 & PC3 & PC4 & PC5 & PC6 \\ 
+		\hline
+		StDev & 66.650 & 28.003 & 24.356 & 20.348 & 17.832 & 12.301 \\ 
+		Prop. of Var. & 0.347 & 0.061 & 0.046 & 0.032 & 0.025 & 0.012 \\ 
+		Cum. Prop.& 0.347 & 0.408 & 0.454 & 0.486 & 0.511 & 0.523 \\ 
+		\hline
+	\end{tabular}
+	\caption{Explained Variations of PC: Raw Dataset}\label{table:rawdataprop}
+\end{table}
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{rrrrrrr}
+		\hline
+		& PC1 & PC2 & PC3 & PC4 & PC5 & PC6 \\ 
+		\hline
+		StDev & 73.857 & 35.586 & 23.852 & 14.581 & 11.859 & 10.669 \\ 
+		Prop. of Var. & 0.426 & 0.099 & 0.044 & 0.017 & 0.011 & 0.009 \\ 
+		Cum. Prop. & 0.426 & 0.524 & 0.569 & 0.585 & 0.596 & 0.605 \\ 
+		\hline
+	\end{tabular}
+	\caption{Explained Variations of PC: Detrendset}\label{table:detrendprop}
+\end{table}
+\pagebreak
+\subsection{Plots}
+\begin{figure}[!tbp]
+	\centering
+		\subfloat[PC 1]{\includegraphics[width=0.45\linewidth]{../img/loading_PC1_de}}\label{fig:pc1}
+		\hfill
+		\subfloat[PC 2]{\includegraphics[width=0.45\linewidth]{../img/loading_PC2_de}}\label{fig:pc2}
+		\subfloat[PC 3]{\includegraphics[width=0.45\linewidth]{../img/loading_PC3_de}}\label{fig:pc3}
+		\hfill
+		\subfloat[PC 4]{\includegraphics[width=0.45\linewidth]{../img/loading_PC4_de}}\label{fig:pc4}
+		\subfloat[PC 5]{\includegraphics[width=0.45\linewidth]{../img/loading_PC5_de}}\label{fig:pc5}
+		\hfill
+		\subfloat[PC 6]{\includegraphics[width=0.45\linewidth]{../img/loading_PC6_de}}\label{fig:pc6}
+	\caption{Spatial Patterns}\label{fig:spatialpatter6}
+\end{figure}
+
+\begin{figure}[!tbp]
+	\centering
+	\subfloat[Raw Data]{\includegraphics[height=0.4\textheight]{../img/Scree_plot1}\label{fig:screeplotf1}}
+	\hfill
+	\subfloat[Detrended Data]{\includegraphics[height=0.4\textheight]{../img/Scree_plot2}\label{fig:screeplotf2}}
+	\caption{Scree Plots}\label{fig:screeplot}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{../img/PCA_ts}
+	\caption{Time Series Plots}
+	\label{fig:pcats}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{../img/PCAde_ACF}
+	\caption{Auto-Covariance Function}
+	\label{fig:pcadeacf}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{../img/PCAde_pacf}
+	\caption{Partial ACF}
+	\label{fig:pcadpeacf}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{../img/PCAde_CCF}
+	\caption{Cross-Covariance Function}
+	\label{fig:pcadpeccf}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{../img/PCA_periodogram}
+	\caption{PCA Periodogram}
+	\label{fig:pcaperiodogram}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{../img/residualpc1}
+	\caption{Analysis on Residuals PC1 Fit}
+	\label{fig:residualpc1}
+\end{figure}
+
+\end{document}
