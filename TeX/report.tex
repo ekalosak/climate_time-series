@@ -5,6 +5,8 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{subfig}
+\usepackage{hyperref}
+
 %opening
 \title{Tree Cover Variability Increases from 2005 to 2100\\ in Sub-Saharan Africa}
 \author{Cody Carroll, Eric Kalosa-Kenyon, Amy Kim}
@@ -19,6 +21,8 @@ This report fufills the requirements for the final project in Time Series
     cover between the years of 2005 and 2100. The preliminary analysis using
     common time series methods is followed by changepoint and spacio-temporal
     analyses.
+
+    All authors contributed equally to this work.
 \end{abstract}
 
 \section{Introduction}
@@ -33,7 +37,46 @@ sea ice, and land ice. These modules each influence the global climate and each
 module generates output for subsequent analysis.
 
 In this report, we interrogate the output of the land module both globally and
-over a single location in Sub-Saharan Africa.
+over a single location in Sub-Saharan Africa. The ensemble used to generate this
+data follows the RCP4.5 carbon pathway. Roughly, this pathway captures the
+atmospheric carbon concentration induced by peak carbon emissions around 2035
+with a decrease thereafter. We are interested to understand how a highly
+productive region's tree cover responds to this RCP. The location in question is 
+
+\includegraphics{../img/LAI_global_t0.png}
+
+LAI is unitless quantity (leaf area ($m^2$))/(ground area ($m^2$))
+"Comparative Physiological Studies on the Growth of Field Crops" Watson 1947 Annals of Botany
+Bounded below by 0, above by physiological limits
+
+\includegraphics{../img/lai.png}\\
+\includegraphics{../img/lai2.png}
+
+The raw data at a single location is presented in the figure below:
+\includegraphics{../img/pacf_acf_raw.png}
+
+The detrended data at a single location is presented in the figure below:
+\includegraphics{../img/detrended_acf_pacf.png}
+
+The variance-standardized data at a single location is presented in the figure
+below:
+\includegraphics{../img/standatdized_var_LAI.png}
+
+\includegraphics{../img/detrended_stdzd_acf_pacf.png}
+
+The differenced data at a single location is presented in the figure below:
+\includegraphics{../img/differenced_acf_pacf.png}
+
+The deseasoned data at a single location is presented in the figure below:
+\includegraphics{../img/deseasonalization_spectrum.png}
+\includegraphics{../img/deseasonalization_resid.png}
+\includegraphics{../img/deseasonalization_resid_difference.png}
+\includegraphics{../img/deseasonalization.png}
+
+The fit of and simulation from an AR(4) to the deseasoned data is presented
+below:
+\includegraphics{../img/ar_sim.png}
+
 
 \section{Changepoint}
 
@@ -178,7 +221,8 @@ NCAR CMIP database. The ensemble's Project ID in the CMIP5 database is
 cmip5.output1.NCAR.CCSM4.rcp45.mon.land.Lmon.r2i1p1.v20140403|esgf-data.ucar.edu.
 Its version number is 20140403. To download the bash script that will download
 the data for you, follow this link:
-https://esgf-node.llnl.gov/esg-search/wget/?distrib=false&dataset_id=cmip5.output1.NCAR.CCSM4.rcp45.mon.land.Lmon.r2i1p1.v20140403|esgf-data.ucar.edu
+\url{https://esgf-node.llnl.gov/esg-search/wget/?distrib=false&dataset_id=cmip5.output1.NCAR.CCSM4.rcp45.mon.land.Lmon.r2i1p1.v20140403|esgf-data.ucar.edu}
+
 .
 
 \section{PCA}
