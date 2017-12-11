@@ -7,15 +7,80 @@
 \usepackage{subfig}
 %opening
 \title{Tree Cover Variability Increases from 2005 to 2100\\ in Sub-Saharan Africa}
-\author{ Cody Carroll, Eric Kalosa-Kenyon, Amy Kim}
+\author{Cody Carroll, Eric Kalosa-Kenyon, Amy Kim}
 
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
-
+This report fufills the requirements for the final project in Time Series
+    Analysis (STA237A). The authors report on the behavior of simulated tree
+    cover between the years of 2005 and 2100. The preliminary analysis using
+    common time series methods is followed by changepoint and spacio-temporal
+    analyses.
 \end{abstract}
+
+\section{Introduction}
+Climate change is driven by anthropogenic carbon forcing. Predicated on this
+inconvenient reality, the Intergovernmental Pannel on Climate Change has
+developed representative carbon forcing pathways (RCPs) to coordinate
+climate research. Ensembles of computer simulations are run using pre-selected
+RCPs and calibrated using historical observations. These simulations are
+realizations of gridded meteorological PDEs in the Community Climate Model
+System (CCMS). The CCMS has 5 components and a coupler: atmosphere, sea, land,
+sea ice, and land ice. These modules each influence the global climate and each
+module generates output for subsequent analysis.
+
+In this report, we interrogate the output of the land module both globally and
+over a single location in Sub-Saharan Africa.
+
+\section{Changepoint}
+
+Instead of dealing with the non-stationarity of our series by differencing and using the ARIMA framework, another approach is to notice that there are specific points in time where the time series changes behavior in one fell swoop. An example of this is around the year 2025, where the series jumps up to a mean level of around 11.75 and stays there. Figure 1 illustrates this "jump" with a red dashed line.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=5in, height=4.5in]{../img/changepoint_LAI.png}
+	\caption{LAI TS}
+\end{figure}
+
+This point in time is called a changepoint. We give a short introduction on changepoint detection methods.\clearpage
+\noindent { \sf 1.1. \quad Changepoint Detection} Conceptually, for data $Z_1,...,Z_n$, a changepoint $\tau$ is a point in time, such that $Z_1,...,Z_\tau$ differ from  $Z_\tau+1,...,Z_n$. For the sake of illustration, we take a simple example. Assume the parametric form
+\begin{equation*}
+	Z_t|\theta_t\sim N(\theta_t,1) \tag*{where $\theta_t=1 ~\text{if}~ t\leq\tau$ and $\theta_t=0 ~\text{if}~ t>\tau$}.
+\end{equation*} An example of such a process is depicted in Figure 2.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.75\linewidth]{../img/changepointex.png}
+	\caption{Example of a Changepoint}
+\end{figure}
+
+It's intuitively clear from the picture that the change occurs at $\tau=200$, but how do we detect where a changepoint occurs, mathematically? One approach is to use a Likelihood Ratio Test. We state the hypotheses as: 
+\begin{equation*}
+	H_0:\theta_t=\theta~ \forall~ t \quad\text{vs.} \quad H_1:\theta_t=\theta_1,~t\leq\tau;~ \theta_t=\theta_2,~t>\tau 
+\end{equation*}
+To construct the likelihood ratio statistic, we need to maximize the likelihood under the null and alternative.  We let $p(\cdot)$ be the probability density function associated with the distribution of the data and $\hat{\theta}$ is the maximum likelihood estimate of the parameters. Under $H_0$, the maximum log-likelihood is $\log p(y_{1:n}|\hat{\theta})$.
+Under $H_1$ with a changepoint $\tau$, the maximum log-likelihood is $ML(\tau) = \log p(y_{1:\tau}|\hat{\theta}_1) +  \log p(y_{\tau+1:n}|\hat{\theta}_2)$. Therefore the likelihood ratio statistic is:
+\begin{equation*}
+	\Lambda(\tau)=\dfrac{\max_\tau ML(\tau)}{\log p(y_{1:n}|\hat{\theta})}
+\end{equation*}
+A more commonly used version of this statistic is the log-LR statistic:
+\begin{equation*}
+2\log\Lambda(\tau)=2\left[\max_\tau ML(\tau)-\log p(y_{1:n}|\hat{\theta})\right]\
+\end{equation*}
+We compare this statistic with a cut-off value, $\lambda$. If $LR>\lambda$, then we reject $H_0$ and estimate the changepoint as 
+\begin{equation*}
+\hat{\tau}=\arg\max_\tau LR(\tau)
+\end{equation*}
+There are many different ways to select $\lambda$. Selecting an optimal value of $\lambda$ remains an open research topic in changepoint analysis. We use the package 'changepoint' to investigate if our LAI time series has a changepoint, using a specific $\lambda$ value that takes into consideration the inherent correlation between observations of a time series.
+\begin{figure}
+	\centering
+	\includegraphics[width=0.55\linewidth]{../img/multi_changepoint_LAI.png}
+	\caption{LAI TS}
+\end{figure}
+We find an estimated changepoint of $\hat{\tau}= 237$ months after Jan. 2005, i.e. 2026 is when LAI experiences a changepoint in mean. Looking at the series after 2026 though, we suspect there may be more time points. So we segment the series and iterate the changepoint estimation. We need to consider multiple testing since we are doing several tests now..
+
+
 
 \section{Principal Component Analysis}
 \paragraph{} 
@@ -107,6 +172,15 @@ X_t &= c_1\cos(2\pi\frac{1}{12}t) + c_2\sin(2\pi\frac{1}{12}t) + c_3\cos(2\pi\fr
 this model can explain 99.62\% variances. 
 
 \appendix
+\section{Simulation}
+All analysis in this report was performed on a single ensemble submission to the
+NCAR CMIP database. The ensemble's Project ID in the CMIP5 database is
+cmip5.output1.NCAR.CCSM4.rcp45.mon.land.Lmon.r2i1p1.v20140403|esgf-data.ucar.edu.
+Its version number is 20140403. To download the bash script that will download
+the data for you, follow this link:
+https://esgf-node.llnl.gov/esg-search/wget/?distrib=false&dataset_id=cmip5.output1.NCAR.CCSM4.rcp45.mon.land.Lmon.r2i1p1.v20140403|esgf-data.ucar.edu
+.
+
 \section{PCA}
 \subsection{Tables}
 \begin{table}[ht]
