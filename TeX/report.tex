@@ -41,42 +41,62 @@ over a single location in Sub-Saharan Africa. The ensemble used to generate this
 data follows the RCP4.5 carbon pathway. Roughly, this pathway captures the
 atmospheric carbon concentration induced by peak carbon emissions around 2035
 with a decrease thereafter. We are interested to understand how a highly
-productive region's tree cover responds to this RCP. The location in question is 
+productive region's tree cover responds to this RCP. The location in question is
+depicted in the figures below.
 
-\includegraphics{../img/LAI_global_t0.png}
+\includegraphics[width=\textwidth]{../img/LAI_global_t0.png}
+\includegraphics[width=\textwidth]{../img/google_maps.png}
+\includegraphics[width=\textwidth]{../img/google_maps_sat.png}
 
-LAI is unitless quantity (leaf area ($m^2$))/(ground area ($m^2$))
-"Comparative Physiological Studies on the Growth of Field Crops" Watson 1947 Annals of Botany
-Bounded below by 0, above by physiological limits
+The location we selected is at 3.29 degrees North and 26.25 degrees East. It is
+in an equatorial/monsoon climate and is home to dense tropical rainforest.
 
-\includegraphics{../img/lai.png}\\
-\includegraphics{../img/lai2.png}
+To measure projected tree cover, we study simulated leaf area indices (LAI). LAI
+is unitless quantity (leaf area ($m^2$))/(ground area ($m^2$)) first defined in
+1947 by Watson in the Annals of Botany ("Comparative Physiological Studies on
+the Growth of Field Crops"). As a measure of tree cover, it is bounded below by
+0 and above by physiological limits. The following two google-image search
+results are illustrative guides for the intuition behind using LAI as the metric
+for tree cover.
+
+\includegraphics[width=\textwidth]{../img/lai.png}\\
+\includegraphics[width=\textwidth]{../img/lai2.png}
 
 The raw data at a single location is presented in the figure below:
-\includegraphics{../img/pacf_acf_raw.png}
+\includegraphics[width=\textwidth]{../img/pacf_acf_raw.png}
 
-The detrended data at a single location is presented in the figure below:
-\includegraphics{../img/detrended_acf_pacf.png}
+Noticing that the raw signal is highly nonstationary (the autocovariance
+function appears to change over time), we decided to remove long-terem and
+seasonal trends. Two common methods for long-term degrending are polynomial fit
+and complexity-criterion-restricted (e.g. MIC) moving averages. Both methods are
+shown below. We move forward using the polynomial regression detrending method
+because it preserves the quasi-continuity of the data. The residual signal after
+detrending with the polynomial regression is shown below:
+\includegraphics[width=\textwidth]{../img/detrended_acf_pacf.png}
 
-The variance-standardized data at a single location is presented in the figure
-below:
-\includegraphics{../img/standatdized_var_LAI.png}
+To standardize the variance of the data, we use a running standard deviation
+with a window-size of 10 years. We regress linearly the running standard
+deviation across all 95 years of signal and divide the detrended signal by the
+regression output. The resultant variance-standardized data at a single location
+is presented in the figures below:
 
-\includegraphics{../img/detrended_stdzd_acf_pacf.png}
+\includegraphics[width=\textwidth]{../img/standatdized_var_LAI.png}
+\includegraphics[width=\textwidth]{../img/detrended_stdzd_acf_pacf.png}
 
 The differenced data at a single location is presented in the figure below:
-\includegraphics{../img/differenced_acf_pacf.png}
+\includegraphics[width=\textwidth]{../img/differenced_acf_pacf.png}
 
 The deseasoned data at a single location is presented in the figure below:
-\includegraphics{../img/deseasonalization_spectrum.png}
-\includegraphics{../img/deseasonalization_resid.png}
-\includegraphics{../img/deseasonalization_resid_difference.png}
-\includegraphics{../img/deseasonalization.png}
+\includegraphics[width=\textwidth]{../img/deseasonalization_spectrum.png}
+\includegraphics[width=\textwidth]{../img/deseasonalization_resid.png}
+\includegraphics[width=\textwidth]{../img/deseasonalization_resid_difference.png}
+\includegraphics[width=\textwidth]{../img/deseasonalization.png}
 
 The fit of and simulation from an AR(4) to the deseasoned data is presented
 below:
-\includegraphics{../img/ar_sim.png}
-
+\includegraphics[width=\textwidth]{../img/ar_sim.png}
+The coefficients for this AR(4) model fit to the deseasonalized signal are
+$\Psi_{1:4} = 1.316, -0.073, -0.054, \textrm{ and } -0.203$.
 
 \section{Changepoint}
 
