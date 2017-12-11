@@ -16,10 +16,10 @@
 \maketitle
 
 \begin{abstract}
-This report fufills the requirements for the final project in Time Series
+This report fulfills the requirements for the final project in Time Series
     Analysis (STA237A). The authors report on the behavior of simulated tree
     cover between the years of 2005 and 2100. The preliminary analysis using
-    common time series methods is followed by changepoint and spacio-temporal
+    common time series methods is followed by changepoint and spatio-temporal
     analyses.
 
     All authors contributed equally to this work.
@@ -129,7 +129,6 @@ We find an estimated changepoint of $\hat{\tau}= 237$ months after Jan. 2005, i.
 \paragraph{} 
 We have done the time series analysis for the one location, and we can expand our analysis into global scale. This becomes the analysis of space-time with a large dataset (12818 locations and 1140 time points). In order to extract the underlying trends, we can consider Principal Component Analysis for examining both the spatial and temporal variation here. 
 
-Principal component: Temporal pattern (true values x loadings) vs. loadings of each principal components: Spatial Pattern - eigenvectors
 \paragraph{Principal Component Analysis}
 \begin{equation}
 \mathbf{Z}(s,t) = \mathbf{U}\mathbf{\Lambda}\mathbf{V}^T
@@ -176,8 +175,8 @@ Temporal pattern explains the dominant temporal variation of time series in the 
 \begin{figure}
 	\centering
 %	\subfloat[Raw Data]{\includegraphics[width=0.7\linewidth]{../img/PC-ts}}\label{fig:ts1}
-	\subfloat[Detrened Data]{\includegraphics[width=0.7\linewidth]{../img/PC-ts_de}}\label{fig:ts2}
-	\caption{PC temporal patterns}
+	\includegraphics[width=0.7\linewidth]{../img/PC-ts_de}
+	\caption{PC temporal patterns of Detrend Data}
 	\label{fig:pc-tsde}
 \end{figure}
 
