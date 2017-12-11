@@ -63,6 +63,7 @@ for tree cover.
 \includegraphics[width=\textwidth]{../img/lai2.png}
 
 The raw data at a single location is presented in the figure below:
+
 \includegraphics[width=\textwidth]{../img/pacf_acf_raw.png}
 
 Noticing that the raw signal is highly nonstationary (the autocovariance
@@ -72,6 +73,7 @@ and complexity-criterion-restricted (e.g. MIC) moving averages. Both methods are
 shown below. We move forward using the polynomial regression detrending method
 because it preserves the quasi-continuity of the data. The residual signal after
 detrending with the polynomial regression is shown below:
+
 \includegraphics[width=\textwidth]{../img/detrended_acf_pacf.png}
 
 To standardize the variance of the data, we use a running standard deviation
@@ -83,20 +85,50 @@ is presented in the figures below:
 \includegraphics[width=\textwidth]{../img/standatdized_var_LAI.png}
 \includegraphics[width=\textwidth]{../img/detrended_stdzd_acf_pacf.png}
 
-The differenced data at a single location is presented in the figure below:
+In an attempt to further stationalize the signal, we apply a first differences
+filter to the deseasonalized data.  The differenced data at a single location is
+presented in the figure below:
+
 \includegraphics[width=\textwidth]{../img/differenced_acf_pacf.png}
 
-The deseasoned data at a single location is presented in the figure below:
+The differenced data is not stationary, so we move forward with an analysis of
+the deseasonalized data, as follows. The spectrum of an autoregressive process
+with a year's memory ($AR(12)$) is depicted in the figure below.
+
 \includegraphics[width=\textwidth]{../img/deseasonalization_spectrum.png}
+
+The $AR(12)$ model regressed on the deseasonalized data still shows strong
+signals at annual and multi-annual frequencies, indicating that there is still
+seasonal structure left over. To address some of this structure, we fit a
+running average with a window-size of one year to the data, shown above in red.
+The following figure depicts the residuals of the normalized Sub-Saharan LAI
+with long-term and annual seasonal trends removed.
+
 \includegraphics[width=\textwidth]{../img/deseasonalization_resid.png}
+
+Noticing that there is still substantial structure in the deseasonalized
+residuals, we apply a first differences filter to the deseasonalized residuals.
+This differencing yields the following signal.
+
 \includegraphics[width=\textwidth]{../img/deseasonalization_resid_difference.png}
+
+The residuals in this case appear to contain most of the non-stationary signal.
+The following figure depicts the 12-month moving average of the normalized
+detrended signal. There are 4 prominent legs of the PACF, so we fit an AR(4)
+model to the moving average.
+
 \includegraphics[width=\textwidth]{../img/deseasonalization.png}
 
-The fit of and simulation from an AR(4) to the deseasoned data is presented
-below:
+As described above, the normalized, deseasonalized data has an AR(4) structure
+suggested by its PACF. We fit an AR(4) and simulated some data from the process,
+depicted in the following figure.
+
 \includegraphics[width=\textwidth]{../img/ar_sim.png}
+
 The coefficients for this AR(4) model fit to the deseasonalized signal are
-$\Psi_{1:4} = 1.316, -0.073, -0.054, \textrm{ and } -0.203$.
+$\Psi_{1:4} = 1.316, -0.073, -0.054, \textrm{ and } -0.203$. The peak
+frequency on the lefthandside of the spectral density plot suggests that the
+only prominent periodic signal left over is the long term trend.
 
 \section{Changepoint}
 
