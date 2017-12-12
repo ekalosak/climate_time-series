@@ -130,50 +130,58 @@ $\Psi_{1:4} = 1.316, -0.073, -0.054, \textrm{ and } -0.203$. The peak
 frequency on the lefthandside of the spectral density plot suggests that the
 only prominent periodic signal left over is the long term trend.
 
-\section{Changepoint}
+\section{Changepoint Analysis}
 
-Instead of dealing with the non-stationarity of our series by differencing and using the ARIMA framework, another approach is to notice that there are specific points in time where the time series changes behavior in one fell swoop. An example of this is around the year 2025, where the series jumps up to a mean level of around 11.75 and stays there. Figure 1 illustrates this "jump" with a red dashed line.
-\begin{figure}[h]
+Instead of dealing with the non-stationarity of our series by differencing and using the ARIMA framework, another approach is to notice that there are specific points in time where the time series changes behavior in one fell swoop. An example of this is around the year 2026, where the series jumps up to a mean level of around 11.75 and stays there. Figure 1 illustrates this "jump" with a red dashed line.
+\begin{figure}[h!]
 	\centering
-	\includegraphics[width=5in, height=4.5in]{../img/changepoint_LAI.png}
+	\includegraphics[width=5in, height=5in]{../img/changepoint_LAI.png}
 	\caption{LAI TS}
 \end{figure}
 
-This point in time is called a changepoint. We give a short introduction on changepoint detection methods.\clearpage
-\noindent { \sf 1.1. \quad Changepoint Detection} Conceptually, for data $Z_1,...,Z_n$, a changepoint $\tau$ is a point in time, such that $Z_1,...,Z_\tau$ differ from  $Z_\tau+1,...,Z_n$. For the sake of illustration, we take a simple example. Assume the parametric form
+This point in time is called a changepoint. We give a short introduction on changepoint detection methods.
+\noindent { \sf 2.1. \quad Changepoint Detection}
+\par Conceptually, for data $Z_1,...,Z_n$, a changepoint $\tau$ is a point in time, such that $Z_1,...,Z_\tau$ differ from  $Z_\tau+1,...,Z_n$. For the sake of illustration, we take a simple example. Assume the parametric form
 \begin{equation*}
 	Z_t|\theta_t\sim N(\theta_t,1) \tag*{where $\theta_t=1 ~\text{if}~ t\leq\tau$ and $\theta_t=0 ~\text{if}~ t>\tau$}.
 \end{equation*} An example of such a process is depicted in Figure 2.
-\begin{figure}[h]
+\clearpage
+\begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.75\linewidth]{../img/changepointex.png}
 	\caption{Example of a Changepoint}
 \end{figure}
 
+
 It's intuitively clear from the picture that the change occurs at $\tau=200$, but how do we detect where a changepoint occurs, mathematically? One approach is to use a Likelihood Ratio Test. We state the hypotheses as: 
 \begin{equation*}
 	H_0:\theta_t=\theta~ \forall~ t \quad\text{vs.} \quad H_1:\theta_t=\theta_1,~t\leq\tau;~ \theta_t=\theta_2,~t>\tau 
 \end{equation*}
-To construct the likelihood ratio statistic, we need to maximize the likelihood under the null and alternative.  We let $p(\cdot)$ be the probability density function associated with the distribution of the data and $\hat{\theta}$ is the maximum likelihood estimate of the parameters. Under $H_0$, the maximum log-likelihood is $\log p(y_{1:n}|\hat{\theta})$.
+To construct the likelihood ratio statistic, we need to maximize the likelihood under the null and alternative hypotheses.  We let $p(\cdot)$ be the probability density function associated with the distribution of the data and $\hat{\theta}$ is the maximum likelihood estimate of the parameters. Under $H_0$, the maximum log-likelihood is $\log p(y_{1:n}|\hat{\theta})$.
 Under $H_1$ with a changepoint $\tau$, the maximum log-likelihood is $ML(\tau) = \log p(y_{1:\tau}|\hat{\theta}_1) +  \log p(y_{\tau+1:n}|\hat{\theta}_2)$. Therefore the likelihood ratio statistic is:
 \begin{equation*}
 	\Lambda(\tau)=\dfrac{\max_\tau ML(\tau)}{\log p(y_{1:n}|\hat{\theta})}
 \end{equation*}
 A more commonly used version of this statistic is the log-LR statistic:
 \begin{equation*}
-2\log\Lambda(\tau)=2\left[\max_\tau ML(\tau)-\log p(y_{1:n}|\hat{\theta})\right]\
+	2\log\Lambda(\tau)=2\left[\max_\tau ML(\tau)-\log p(y_{1:n}|\hat{\theta})\right]\
 \end{equation*}
 We compare this statistic with a cut-off value, $\lambda$. If $LR>\lambda$, then we reject $H_0$ and estimate the changepoint as 
 \begin{equation*}
-\hat{\tau}=\arg\max_\tau LR(\tau)
+	\hat{\tau}=\arg\max_\tau LR(\tau)
 \end{equation*}
-There are many different ways to select $\lambda$. Selecting an optimal value of $\lambda$ remains an open research topic in changepoint analysis. We use the package 'changepoint' to investigate if our LAI time series has a changepoint, using a specific $\lambda$ value that takes into consideration the inherent correlation between observations of a time series.
-\begin{figure}
+There are many different ways to select $\lambda$. Selecting an optimal value of $\lambda$ remains an open research topic in changepoint analysis.\\
+\noindent { \sf 2.2. \quad Changepoint Analysis on LAI Time Series}
+\par We use the package 'changepoint' to investigate if our LAI time series has a changepoint, using a specific $\lambda$ value that takes into consideration the inherent correlation between observations of a time series.
+
+We find an estimated changepoint of $\hat{\tau}= 237$ months after Jan. 2005, i.e. 2026 is when LAI experiences a changepoint in mean. The test rejected the null hypothesis that there is no changepoint with a p-value $<0.01$. Looking at the series after 2026 though, we question there may be more time points. So we segment the series and iterate the changepoint estimation. Since we are doing several tests now, we need to adjust our $\alpha$ level. I rerun the original test and also test on the subsegment after the changepoint at $\alpha^*=0.05/2$, so that tests have an overall level of $\alpha=0.05$. The first test finds the same changepoint is still significant. However, the second test finds no significant changepoint (Figure 3)  in the remaining data:
+\begin{figure}[h!]
 	\centering
-	\includegraphics[width=0.55\linewidth]{../img/multi_changepoint_LAI.png}
-	\caption{LAI TS}
-\end{figure}
-We find an estimated changepoint of $\hat{\tau}= 237$ months after Jan. 2005, i.e. 2026 is when LAI experiences a changepoint in mean. Looking at the series after 2026 though, we suspect there may be more time points. So we segment the series and iterate the changepoint estimation. We need to consider multiple testing since we are doing several tests now..
+	\includegraphics[width=3.5in, height=3.5in]{../img/changepoint_LAI_seg.png}
+	\caption{LAI Time Series After 2026}
+\end{figure}\\
+We conclude that the only significant changepoint in leaf area index in sub-Saharan Africa occurs in 2026. 
+\par This data is simulated under the setting that carbon emissions peak in the year 2040. Observing a changepoint in 2026 illustrates the ramifications of carbon emissions at the current rate, before they even reach their expected maximum level. We stay cautious with our conclusions and rely on the climatologists and domain experts to spell out the actual science, but the results from our analysis are highly suggestive of real effects of increasing carbon emissions on the global environment.
 
 
 
@@ -202,7 +210,7 @@ We decide to report PCA on a detrend dataset~\footnote{We used cubic splines for
 %x	
 %if retx is true the value of the rotated data (the centred (and scaled if requested) data multiplied by the rotation matrix) is returned. Hence, cov(x) is the diagonal matrix diag(sdev^2). For the formula method, napredict() is applied to handle the treatment of values omitted by the na.action.
 \subsection{Spatial Pattern}
-Spatial pattern explains how strong the PCs depend on some locations, and it is represented by the loadings of each principal components. The mean spatial structure, Figure~\ref{fig:scalepcade}, indicates locations known forest area higher mean values(red) and desert areas have lower values (blue).  We can interpret PC1 implies main variance across the all locations and over the 95 years, Figure~\ref{fig:pc1}. It shows forest areas have negative effects(blue) and infertile lands have positive effects(red) which contracts to mean structure. 
+Spatial pattern explains how strong the PCs depend on some locations, and it is represented by the loadings of each principal components. The mean spatial structure, Figure~\ref{fig:scalepcade}, indicates locations known forest area higher mean values(red) and desert areas have lower values (blue).  We can interpret PC1 implies main variance across the all locations and over the 95 years in Figure 5. It shows forest areas have negative effects (blue) and infertile lands have positive effects (red) which contracts to mean structure. 
 \begin{figure}
 	\centering
 	\includegraphics[width=0.7\linewidth]{../img/Scale_PCA_de}
@@ -212,7 +220,8 @@ Spatial pattern explains how strong the PCs depend on some locations, and it is 
 
 \begin{figure}
 	\centering
-	{\includegraphics[width=0.7\linewidth]{../img/loading_PC1_de}}\label{fig:pc1-spatial}
+	{\includegraphics[width=0.7\linewidth]{../img/loading_PC1_de}}
+	\label{fig:pc1-spatial}
 %	\subfloat[PC 1]{\includegraphics[width=0.45\linewidth]{../img/loading_PC1_de}}\label{fig:pc1}
 %	\hfill
 %	\subfloat[PC 2]{\includegraphics[width=0.45\linewidth]{../img/loading_PC2_de}}\label{fig:pc2}
